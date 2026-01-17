@@ -1,4 +1,5 @@
 //Prepares app
+
 const dontenv = require("dotenv");
 
 //Imports express so sever can be created
