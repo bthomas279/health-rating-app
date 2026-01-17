@@ -35,7 +35,7 @@ app.get("/api/test-db", (req, res) => {
 app.get("/api/users", (req, res) => {
   pool.query("SELECT * FROM users", (err, results) => {
     if (err) {
-      return res.status(500).json({ error: err.mesage });
+      return res.status(500).json({ error: err.message });
     }
     res.json(results);
   });
@@ -43,5 +43,5 @@ app.get("/api/users", (req, res) => {
 
 //Opens and runs the server to allow incoming requests
 app.listen(port, () => {
-  console.log("App is available on port: ", port);
+  console.log("App is available on port:", port);
 });
