@@ -4,7 +4,7 @@
   "description": "This is a node app for the Project",
   "license": "ISC",
   "author": "Benjamin Thomas",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "run": "node index.js",
@@ -14,6 +14,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "mysql": "^2.18.1",
     "mysql2": "^3.16.1"
   }
 }
