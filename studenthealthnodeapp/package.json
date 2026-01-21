@@ -1,13 +1,13 @@
 {
   "name": "studenthealthnodeapp",
   "version": "1.0.0",
-  "description": "This is a node app for the Project",
+  "description": "This is a node app for the project",
   "license": "ISC",
   "author": "Benjamin Thomas",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "run": "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
