@@ -1,4 +1,7 @@
-import mysql from "mysql2/promise";
+import dotenv from "dotenv";
+import mysql from "mysql2";
+dotenv.config();
+
 
 //Database connect-------
 //Preparing Connection
@@ -9,7 +12,5 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME
   }).promise()
 
-const result = await pool.query("SELECT * FROM notes")
-console.log(result)
-
-
+const result = await pool.query("SELECT * FROM user");
+console.log(result);
