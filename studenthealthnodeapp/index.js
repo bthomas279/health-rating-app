@@ -14,7 +14,8 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extende: true }));
+//Parse Incoming Requests sent by HTML forms
+app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT;
 
