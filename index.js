@@ -12,10 +12,19 @@ dotenv.config();
 
 //Creates express application
 const app = express();
+
+//Tells app to use ejs
+app.set("view-engine", "ejs");
+
 app.use(cors());
 app.use(express.json());
+
 //Parse Incoming Requests sent by HTML forms
 app.use(express.urlencoded({ extended: true }));
+
+app.get("/", (req, res) => {
+  res.render("index.ejs");
+});
 
 const port = process.env.PORT;
 
