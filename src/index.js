@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 
 //Tells app to use ejs. Use ejs as view engine
-app.set("view-engine", "ejs");
+app.set("view engine", "ejs");
 
 //Define usage and port
 app.use(cors());
@@ -23,6 +23,9 @@ const port = process.env.PORT;
 
 //Parse Incoming Requests sent by HTML forms
 app.use(express.urlencoded({ extended: false }));
+
+//Connect style.css to views
+app.use(express.static("public"));
 
 //Render Login Page
 app.get("/", (req, res) => {
@@ -38,7 +41,7 @@ app.get("/signup", (req, res) => {
 app.listen(port, () => {
   console.log("App is available on port:", port);
 });
-
+//Access Using http://localhost:port
 
 //Tests API endpoint
 //app.get("/api/test", (req, res) => {
