@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import cors from "cors";
 
 //Importing database to be used in index.js
-import health_db from "database.js";
+import health_db from "./database.js";
 
 //Dotenv configuration
 dotenv.config();
@@ -23,7 +23,7 @@ app.use(express.json());
 const port = process.env.PORT;
 
 //Parse Incoming Requests sent by HTML forms
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 //Connect style.css to views
 app.use(express.static("public"));
@@ -46,10 +46,10 @@ app.post("/signup", async (req, res) => {
 
   //Protecting user passwords through hash
   const hashPassword = await bcrypt.hash(password, 12);
-  console.log("Data to be sent:", username, hashPassword);
+  console.log("Currently sending user data:", username, hashPassword);
 
   health_db.query(
-    "INSERT INTO users (user_email, user_password) VALUES (?, ?)",
+    "INSERT INTO users (username, user_password) VALUES (?, ?)",
     [username, hashPassword],
     (err) => {
       //Flags send attempt if username was already used
@@ -67,9 +67,9 @@ app.post("/signup", async (req, res) => {
 
 //Opens and runs the server to allow incoming requests
 app.listen(port, () => {
-  console.log("App is available on port:", port);
+  console.log("App is available on http://localhost:",port);
 });
-//Access Using http://localhost:port
+//Access Using http://localhost:3000
 
 //Tests API endpoint
 //app.get("/api/test", (req, res) => {
