@@ -18,11 +18,12 @@ app.set("view engine", "ejs");
 
 //Define usage and port
 app.use(cors());
+//Convert data into json
 app.use(express.json());
 const port = process.env.PORT;
 
 //Parse Incoming Requests sent by HTML forms
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 //Connect style.css to views
 app.use(express.static("public"));
@@ -37,20 +38,32 @@ app.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-//Sends information from user to MySQL Database-------------------
+
+//Register user and sends information from user to MySQL Database-------------------
 app.post("/signup", async (req, res) => {
-  const { userEmail, userPassword } = req.body;
+  try {
+     const { username, password } = req.body;
 
   //Protecting user passwords through hash
-  const hashPassword = await bcrypt.hash(userPassword, 12);
+  const hashPassword = await bcrypt.hash(password, 12);
+  console.log("Data to be sent:", username, hashPassword);
 
-  const sql = "INSERT INTO users (user_email, user_password) VALUES (?, ?)";
-  health_db.query(sql, [userEmail, hashPassword], (err) => {
-    if (err) {
-      return res.status(400)
+  health_db.query(
+    "INSERT INTO users (user_email, user_password) VALUES (?, ?)",
+    [username, hashPassword],
+    (err) => {
+      //Flags send attempt if username was already used
+      if (err) {
+        return res.status(400).json({ error: "Username already exists" });
+      }
+      res.json({ message: "Account successfully registered!" });
     }
-  });
+  );
+} catch (err) {
+   res.status(500).json({ error: "Server error" });
+  }
 });
+ 
 
 //Opens and runs the server to allow incoming requests
 app.listen(port, () => {
