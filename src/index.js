@@ -10,7 +10,7 @@ import health_db from "./database.js";
 //Dotenv configuration
 dotenv.config();
 
-//Creates express application
+//Creates express applications
 const app = express();
 
 //Tells app to use ejs. Use ejs as view engine
@@ -28,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 //Connect style.css to views
 app.use(express.static("public"));
 
+//PAGE RENDERS------------------------
 //Render Login Page
 app.get("/login", (req, res) => {
   res.render("login");
@@ -36,6 +37,11 @@ app.get("/login", (req, res) => {
 //Render Signup Page
 app.get("/signup", (req, res) => {
   res.render("signup");
+});
+
+//Render Home Page
+app.get("/home", (req, res) => {
+  res.render("home");
 });
 
 //Register user and sends information from user to MySQL Database-------------------
@@ -67,30 +73,50 @@ app.post("/signup", async (req, res) => {
         error: "Username already exists. Please select a different username.",
       });
     }
-    res.status(201).json({ message: "Account successfully registered!" });
+    console.log("Account successfully registered!");
   }
 });
 
+//Defining Router
+//
+const router = express.Router();
+
 //Check if the username and password match ones in the MySQL database.
-//If so, logs user in and sends them to home.ejs. 
-app.get("/api/user/:username", async (req, res) => {
-  const { username } = req.params;
+//If so, logs user in and sends them to home.ejs.
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
 
-  try {
-    const [rows] = await health_db.execute(
-      "SELECT username FROM users WHERE username = ?",
-      [username]
-    );
-    if (rows.length === 0) {
-      return res.status(404).json({ message: "User does not exist" });
+  //Attempt to grab username column and password column from database
+  const sql = "SELECT user_password, FROM users WJERE username = ?";
+
+  health_db.query(sql, [username], async (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Server Error");
     }
-    res.json(rows[0]);
 
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Database error" });
+    //If the user (username) is not found, sends error.
+    if (results.length === 0) {
+      return res.status(401).send("Username or password is incorrect.");
+    }
 
-  }
+    //Protecting user passwords through hash
+    const hashPassword = results[0].password;
+
+    //Var to Compare inputed password and password in database
+    const match = await bcrypt.compare(password, hashPassword);
+
+    //If passwords don't match, sends error.
+    if (!match) {
+      return res.status(401).send("Username or password is incorrect");
+    }
+
+    //Successful connection
+    res.send("Login successful");
+
+    //Send user to home_page
+    res.redirect("/home");
+  });
 });
 
 //Opens and runs the server to allow incoming requests
