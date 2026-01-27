@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 //Render Login Page
-app.get("/", (req, res) => {
+app.get("/login", (req, res) => {
   res.render("login");
 });
 
@@ -54,20 +54,21 @@ app.post("/signup", async (req, res) => {
       hashPassword,
     );
 
-    //Database Query
-    health_db.query(
-      "INSERT INTO users (username, user_password) VALUES (?, ?)",
-      [username, hashPassword],
-      (err) => {
-      if (err) {
-        //Flags send attempt if username was already used
-        return res.status(409).json({ error: "Username already exists. Please select a different username." });
+    //Database Querying
+    const sql = `INSERT INTO users (username, user_password) VALUES (?, ?)`;
+    await health_db.execute(sql, [username, hashPassword]);
+
+    //If Username/Password were added, sends user to login page
+    res.redirect("/login");
+
+  } catch (err) {
+      //Flags send attempt if username was already used
+      if (err.code === "ER_DUP_ENTRY") {
+          return res.status(400).render("/signup", { 
+          error: "Username already exists. Please select a different username."},
+        );
       }
       res.status(201).json({ message: "Account successfully registered!" });
-      },
-    );
-  } catch (err) {
-    res.json({ error: "Server error" });
   }
 });
 
