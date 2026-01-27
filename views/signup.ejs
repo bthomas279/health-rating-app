@@ -1,12 +1,13 @@
 <html>
     <head>
         <title>Student Mental Health Rating App - Signup Page</title>
+        <script defer src = "public/signup.js"></script>
     </head>
     <body>
 
         <div class = "form-container">
             <h2>SignUp</h2>
-            <form action = "/signup" method = "post">
+            <form action = "/signup" method = "post" id = "signupForm">
                 <div class = "form-group">
                     <label for = "name">Username:</label>
                     <input type ="text" id = "name" name = "username" required>
@@ -17,6 +18,7 @@
                 </div>
                 <a href = "/login"><button type = "submit" class = "submit-button">SignUp</button></a>
             </form>
+
         </div>
 
     </body>

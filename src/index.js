@@ -59,18 +59,11 @@ app.post("/signup", async (req, res) => {
       "INSERT INTO users (username, user_password) VALUES (?, ?)",
       [username, hashPassword],
       (err) => {
-        if (err) {
-          //Flags send attempt if username was already used
-          if (err.code === "ER_DUP_ENTRY") {
-            return res.status(409).json({ 
-              error: "Username already exists. Please select a different username."
-            });
-          }
-          return res.status(500).json({
-            error: "Database error"
-          });
-        }
-        res.status(201).json({ message: "Account successfully registered!" });
+      if (err) {
+        //Flags send attempt if username was already used
+        return res.status(409).json({ error: "Username already exists. Please select a different username." });
+      }
+      res.status(201).json({ message: "Account successfully registered!" });
       },
     );
   } catch (err) {
