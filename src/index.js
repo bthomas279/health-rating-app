@@ -72,12 +72,24 @@ app.post("/signup", async (req, res) => {
 });
 
 //Check if the username and password match ones in the MySQL database.
-//If so, logs user in and sends them to home.ejs.
+//If so, logs user in and sends them to home.ejs. 
 app.get("/api/user/:username", async (req, res) => {
   const { username } = req.params;
 
   try {
-    const [rows] = await 
+    const [rows] = await health_db.execute(
+      "SELECT username FROM users WHERE username = ?",
+      [username]
+    );
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+    res.json(rows[0]);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Database error" });
+
   }
 });
 
