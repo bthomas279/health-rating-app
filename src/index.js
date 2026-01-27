@@ -60,15 +60,24 @@ app.post("/signup", async (req, res) => {
 
     //If Username/Password were added, sends user to login page
     res.redirect("/login");
-
   } catch (err) {
-      //Flags send attempt if username was already used
-      if (err.code === "ER_DUP_ENTRY") {
-          return res.status(400).render("/signup", { 
-          error: "Username already exists. Please select a different username."},
-        );
-      }
-      res.status(201).json({ message: "Account successfully registered!" });
+    //Flags send attempt if username was already used
+    if (err.code === "ER_DUP_ENTRY") {
+      return res.status(400).render("/signup", {
+        error: "Username already exists. Please select a different username.",
+      });
+    }
+    res.status(201).json({ message: "Account successfully registered!" });
+  }
+});
+
+//Check if the username and password match ones in the MySQL database.
+//If so, logs user in and sends them to home.ejs.
+app.get("/api/user/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const [rows] = await 
   }
 });
 
