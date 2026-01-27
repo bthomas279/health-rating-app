@@ -38,36 +38,49 @@ app.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-
 //Register user and sends information from user to MySQL Database-------------------
 app.post("/signup", async (req, res) => {
+  const { username, password } = req.body;
   try {
-     const { username, password } = req.body;
+    //Protecting user passwords through hash
+    const hashPassword = await bcrypt.hash(password, 12);
 
-  //Protecting user passwords through hash
-  const hashPassword = await bcrypt.hash(password, 12);
-  console.log("Currently sending user data:", username, hashPassword);
+    //Logs User input
+    console.log(
+      "The app is sending user data - ",
+      "Username:",
+      username,
+      "Password:",
+      hashPassword,
+    );
 
-  health_db.query(
-    "INSERT INTO users (username, user_password) VALUES (?, ?)",
-    [username, hashPassword],
-    (err) => {
-      //Flags send attempt if username was already used
-      if (err) {
-        return res.status(400).json({ error: "Username already exists" });
-      }
-      res.json({ message: "Account successfully registered!" });
-    }
-  );
-} catch (err) {
-   res.status(500).json({ error: "Server error" });
+    //Database Query
+    health_db.query(
+      "INSERT INTO users (username, user_password) VALUES (?, ?)",
+      [username, hashPassword],
+      (err) => {
+        if (err) {
+          //Flags send attempt if username was already used
+          if (err.code === "ER_DUP_ENTRY") {
+            return res.status(409).json({ 
+              error: "Username already exists. Please select a different username."
+            });
+          }
+          return res.status(500).json({
+            error: "Database error"
+          });
+        }
+        res.status(201).json({ message: "Account successfully registered!" });
+      },
+    );
+  } catch (err) {
+    res.json({ error: "Server error" });
   }
 });
- 
 
 //Opens and runs the server to allow incoming requests
 app.listen(port, () => {
-  console.log("App is available on http://localhost:",port);
+  console.log("App is available on http://localhost:", port);
 });
 //Access Using http://localhost:3000
 
@@ -75,7 +88,3 @@ app.listen(port, () => {
 //app.get("/api/test", (req, res) => {
 //  res.json({ message: "API is working." });
 //});
-
-//Tests Grabbing Values from MySQL Database
-//const [rows] = await health_db.query("SELECT * FROM users");
-//console.log(rows);
