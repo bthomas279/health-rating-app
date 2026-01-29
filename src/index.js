@@ -47,6 +47,12 @@ app.get("/home", (req, res) => {
   res.render("home");
 });
 
+//Transfer user habit input data to MySQL database------------------
+//app.post("/home", async (req, res) => {
+  //const {}
+//})
+
+
 //Register user and sends information from user to MySQL Database-------------------
 app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
@@ -80,7 +86,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-//Check if the username and password match ones in the MySQL database------------
+//Check if the username and password match ones in the MySQL database-------------
 //If so, logs user in and sends them to home.ejs.
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
