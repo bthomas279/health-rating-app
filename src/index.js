@@ -8,7 +8,7 @@ import cors from "cors";
 import health_db from "./database.js";
 
 //Importing login authenication
-import authRoutes from "./routes/auth.js";
+//import authRoutes from "./routes/auth.js";
 
 //Dotenv configuration
 dotenv.config();
@@ -30,9 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 
 //Connect style.css to views
 app.use(express.static("public"));
-
-//Connect auth.js
-app.use("/", authRoutes);
 
 //PAGE RENDERS------------------------
 //Render Login Page
@@ -80,6 +77,53 @@ app.post("/signup", async (req, res) => {
       });
     }
     console.log("Account successfully registered!");
+  }
+});
+
+//Check if the username and password match ones in the MySQL database------------
+//If so, logs user in and sends them to home.ejs.
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  //Testing connection
+  console.log("Grabbed data");
+
+  try {
+    //Attempt to grab username column and password column from database
+    const sql = "SELECT user_password FROM users WHERE username = ?";
+
+    //Use await instead of health_db query due to mysql2/promise
+    //data_pull = Resulting row grab from database or lack thereof
+    const [data_pull] = await health_db.execute(sql, [username]);
+
+    //If the user (username) is not found, sends error.
+    if (data_pull.length === 0) {
+      return res.status(401).send("Username or password is incorrect.");
+    }
+
+    //Protecting user passwords through hash
+      const hashPassword = data_pull[0].user_password;
+
+    //Logs user info (MAY REMOVE LATER)
+    console.log(
+      "Checking info entered - Username:",
+      username,
+      "Password:",
+      hashPassword,
+    );
+
+    //Var to Compare inputed password and password in database
+    const match = await bcrypt.compare(password, hashPassword);
+
+    //If passwords don't match, sends error.
+    if (!match) {
+      return res.status(401).send("Username or password is incorrect");
+    }
+    //Successful connection. Send user to home_page.
+    res.redirect("/home");
+    
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Server Error inside /login app.post");
   }
 });
 
