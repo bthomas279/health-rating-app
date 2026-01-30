@@ -37,12 +37,13 @@ app.use(express.static("public"));
 app.use(
   session({
     secret: process.env.SESSION_CODE, //Session password
-    resave: false, //Controls if session is saved on every user habit data submission
-    saveUnititialized: false, //Controls if empty sessions are saved
+    resave: true, //Controls if session is saved on every user habit data submission
+    saveUninitialized: true, //Controls if empty sessions are saved
   }),
 );
 
 //PAGE RENDERS------------------------
+//App Routes
 //Render Login Page
 app.get("/login", (req, res) => {
   res.render("login");
@@ -100,7 +101,7 @@ app.post("/login", async (req, res) => {
   console.log("Grabbed data");
 
   try {
-    //Attempt to grab user_id username column and password column from database
+    //Attempt to grab user_id, username column and password column from database
     const sql = "SELECT user_id, user_password FROM users WHERE username = ?";
 
     //Use await instead of health_db query due to mysql2/promise
@@ -115,13 +116,8 @@ app.post("/login", async (req, res) => {
     //Protecting user passwords through hash
     const hashPassword = data_pull[0].user_password;
 
-    //Logs user info (MAY REMOVE LATER)
-    console.log(
-      "Checking info entered - Username:",
-      username,
-      "Password:",
-      hashPassword,
-    );
+    //Console log update
+    console.log("Checking info entered -", "Username:", username);
 
     //Var to Compare inputed password and password in database
     const match = await bcrypt.compare(password, hashPassword);
@@ -131,10 +127,12 @@ app.post("/login", async (req, res) => {
       return res.status(401).send("Username or password is incorrect");
     }
     //Successful connection. Send user to home_page.
+    console.log("Login successful!");
     res.redirect("/home");
 
-    //With successful connection, starts session for user based on their user_id
+    //With successful connection, saves session for user based on their user_id
     req.session.userId = data_pull[0].user_id;
+    console.log(req.session.userId);
 
     //Error catch
   } catch (err) {
@@ -148,10 +146,11 @@ app.post("/home", async (req, res) => {
   //Defining userId
   //Used to define users on platform and filling user_id foreign key
   const userId = req.session.userId;
+  console.log(userId)
 
   //Check if the user_id is blank. If so, user isn't allowed in
   if (!userId) {
-    return res.status(401).json({ error: "User is not logged in" })
+    return res.status(401).json({ error: "User ID is not found" });
   }
 
   //Grab user input values
@@ -189,7 +188,9 @@ app.post("/home", async (req, res) => {
     part_time_job,
     extracurricular_participation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
+    //Send information to MySQL database
     await health_db.execute(sql, [
+      userId,
       sleep_hours,
       tv_hours,
       diet_quality,
@@ -204,6 +205,7 @@ app.post("/home", async (req, res) => {
     return res.status(500).send("Server Error inside home");
   }
 });
+
 
 //Opens and runs the server to allow incoming requests
 app.listen(port, () => {
