@@ -34,12 +34,13 @@ app.use(express.static("public"));
 
 //Express-session configuration.
 //Works by storing session ID in a cookie and session data on the server
-app.use(session({
-  secret: process.env.SESSION_CODE, //Session password
-  resave: false, //Controls if session is saved on every user habit data submission 
-  saveUnititialized: false //Controls if empty sessions are saved
-}))
-
+app.use(
+  session({
+    secret: process.env.SESSION_CODE, //Session password
+    resave: false, //Controls if session is saved on every user habit data submission
+    saveUnititialized: false, //Controls if empty sessions are saved
+  }),
+);
 
 //PAGE RENDERS------------------------
 //Render Login Page
@@ -57,57 +58,6 @@ app.get("/home", (req, res) => {
   res.render("home");
 });
 
-//Transfer user habit input data to MySQL database------------------
-app.post("/home", async (req, res) => {
-  const {
-    sleep_hours,
-    tv_hours,
-    diet_quality,
-    exercise_frequency_weekly,
-    daily_study_hours,
-    social_media_hours,
-    part_time_job,
-    extracurricular_participation,
-  } = req.body;
-  //Testing grab
-  console.log(
-    sleep_hours,
-    tv_hours,
-    diet_quality,
-    exercise_frequency_weekly,
-    daily_study_hours,
-    social_media_hours,
-    part_time_job,
-    extracurricular_participation,
-  );
-
-  try {
-    //Log data transfer
-    console.log("User habit data is transfering.");
-
-    //Database Querying
-    const sql = `INSERT INTO user_habits (sleep_hours, tv_hours, diet_quality, 
-    exercise_frequency_weekly,
-    daily_study_hours,
-    social_media_hours,
-    part_time_job,
-    extracurricular_participation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-
-    await health_db.execute(sql, [
-      sleep_hours,
-      tv_hours,
-      diet_quality,
-      exercise_frequency_weekly,
-      daily_study_hours,
-      social_media_hours,
-      part_time_job,
-      extracurricular_participation,
-    ]);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send("Server Error inside /home app.post");
-  }
-});
 
 //Register user and sends information from user to MySQL Database-------------------
 app.post("/signup", async (req, res) => {
@@ -150,8 +100,8 @@ app.post("/login", async (req, res) => {
   console.log("Grabbed data");
 
   try {
-    //Attempt to grab username column and password column from database
-    const sql = "SELECT user_password FROM users WHERE username = ?";
+    //Attempt to grab user_id username column and password column from database
+    const sql = "SELECT user_id, user_password FROM users WHERE username = ?";
 
     //Use await instead of health_db query due to mysql2/promise
     //data_pull = Resulting in row grab from database or lack thereof
@@ -183,12 +133,75 @@ app.post("/login", async (req, res) => {
     //Successful connection. Send user to home_page.
     res.redirect("/home");
 
-    //With successful connection, opens session for user based on their id
-    req.session.
+    //With successful connection, starts session for user based on their user_id
+    req.session.userId = data_pull[0].user_id;
 
+    //Error catch
   } catch (err) {
     console.error(err);
-    return res.status(500).send("Server Error inside /login app.post");
+    return res.status(500).send("Server Error inside login");
+  }
+});
+
+//Transfer user habit input data to MySQL database------------------
+app.post("/home", async (req, res) => {
+  //Defining userId
+  //Used to define users on platform and filling user_id foreign key
+  const userId = req.session.userId;
+
+  //Check if the user_id is blank. If so, user isn't allowed in
+  if (!userId) {
+    return res.status(401).json({ error: "User is not logged in" })
+  }
+
+  //Grab user input values
+  const {
+    sleep_hours,
+    tv_hours,
+    diet_quality,
+    exercise_frequency_weekly,
+    daily_study_hours,
+    social_media_hours,
+    part_time_job,
+    extracurricular_participation,
+  } = req.body;
+  //Testing grab
+  console.log(
+    sleep_hours,
+    tv_hours,
+    diet_quality,
+    exercise_frequency_weekly,
+    daily_study_hours,
+    social_media_hours,
+    part_time_job,
+    extracurricular_participation,
+  );
+
+  try {
+    //Log data transfer
+    console.log("User habit data is transfering.");
+
+    //Database Querying
+    const sql = `INSERT INTO user_habits (user_id, sleep_hours, tv_hours, diet_quality, 
+    exercise_frequency_weekly,
+    daily_study_hours,
+    social_media_hours,
+    part_time_job,
+    extracurricular_participation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    await health_db.execute(sql, [
+      sleep_hours,
+      tv_hours,
+      diet_quality,
+      exercise_frequency_weekly,
+      daily_study_hours,
+      social_media_hours,
+      part_time_job,
+      extracurricular_participation,
+    ]);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Server Error inside home");
   }
 });
 
@@ -197,8 +210,3 @@ app.listen(port, () => {
   console.log("App is available on http://localhost:", port);
 });
 //Access Using http://localhost:3000
-
-//Tests API endpoint
-//app.get("/api/test", (req, res) => {
-//  res.json({ message: "API is working." });
-//});
