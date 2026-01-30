@@ -4,11 +4,12 @@ import express from "express";
 import bcrypt from "bcrypt";
 import cors from "cors";
 
+//Session Middleware import
+//This is for the server to remember the user
+import session from "express-session";
+
 //Importing database to be used in index.js
 import health_db from "./database.js";
-
-//Importing login authenication
-//import authRoutes from "./routes/auth.js";
 
 //Dotenv configuration
 dotenv.config();
@@ -31,6 +32,15 @@ app.use(express.urlencoded({ extended: true }));
 //Connect style.css to views
 app.use(express.static("public"));
 
+//Express-session configuration.
+//Works by storing session ID in a cookie and session data on the server
+app.use(session({
+  secret: process.env.SESSION_CODE, //Session password
+  resave: false, //Controls if session is saved on every user habit data submission 
+  saveUnititialized: false //Controls if empty sessions are saved
+}))
+
+
 //PAGE RENDERS------------------------
 //Render Login Page
 app.get("/login", (req, res) => {
@@ -48,10 +58,56 @@ app.get("/home", (req, res) => {
 });
 
 //Transfer user habit input data to MySQL database------------------
-//app.post("/home", async (req, res) => {
-  //const {}
-//})
+app.post("/home", async (req, res) => {
+  const {
+    sleep_hours,
+    tv_hours,
+    diet_quality,
+    exercise_frequency_weekly,
+    daily_study_hours,
+    social_media_hours,
+    part_time_job,
+    extracurricular_participation,
+  } = req.body;
+  //Testing grab
+  console.log(
+    sleep_hours,
+    tv_hours,
+    diet_quality,
+    exercise_frequency_weekly,
+    daily_study_hours,
+    social_media_hours,
+    part_time_job,
+    extracurricular_participation,
+  );
 
+  try {
+    //Log data transfer
+    console.log("User habit data is transfering.");
+
+    //Database Querying
+    const sql = `INSERT INTO user_habits (sleep_hours, tv_hours, diet_quality, 
+    exercise_frequency_weekly,
+    daily_study_hours,
+    social_media_hours,
+    part_time_job,
+    extracurricular_participation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    await health_db.execute(sql, [
+      sleep_hours,
+      tv_hours,
+      diet_quality,
+      exercise_frequency_weekly,
+      daily_study_hours,
+      social_media_hours,
+      part_time_job,
+      extracurricular_participation,
+    ]);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Server Error inside /home app.post");
+  }
+});
 
 //Register user and sends information from user to MySQL Database-------------------
 app.post("/signup", async (req, res) => {
@@ -62,7 +118,7 @@ app.post("/signup", async (req, res) => {
 
     //Logs User input
     console.log(
-      "The app is sending user data - ",
+      "The app is sending username and password",
       "Username:",
       username,
       "Password:",
@@ -98,7 +154,7 @@ app.post("/login", async (req, res) => {
     const sql = "SELECT user_password FROM users WHERE username = ?";
 
     //Use await instead of health_db query due to mysql2/promise
-    //data_pull = Resulting row grab from database or lack thereof
+    //data_pull = Resulting in row grab from database or lack thereof
     const [data_pull] = await health_db.execute(sql, [username]);
 
     //If the user (username) is not found, sends error.
@@ -107,7 +163,7 @@ app.post("/login", async (req, res) => {
     }
 
     //Protecting user passwords through hash
-      const hashPassword = data_pull[0].user_password;
+    const hashPassword = data_pull[0].user_password;
 
     //Logs user info (MAY REMOVE LATER)
     console.log(
@@ -126,7 +182,10 @@ app.post("/login", async (req, res) => {
     }
     //Successful connection. Send user to home_page.
     res.redirect("/home");
-    
+
+    //With successful connection, opens session for user based on their id
+    req.session.
+
   } catch (err) {
     console.error(err);
     return res.status(500).send("Server Error inside /login app.post");
