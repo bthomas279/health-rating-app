@@ -16,15 +16,16 @@ dotenv.config();
 
 //Creates express applications
 const app = express();
+const port = process.env.PORT;
 
 //Tells app to use ejs. Use ejs as view engine
 app.set("view engine", "ejs");
 
+//Middleware----------------------------
 //Define usage and port
 app.use(cors());
 //Convert data into json
 app.use(express.json());
-const port = process.env.PORT;
 
 //Parse Incoming Requests sent by HTML forms
 app.use(express.urlencoded({ extended: true }));
@@ -44,17 +45,17 @@ app.use(
 
 //PAGE RENDERS------------------------
 //App Routes
-//Render Login Page
+//Render Login Page Route
 app.get("/login", (req, res) => {
   res.render("login");
 });
 
-//Render Signup Page
+//Render Signup Page Route
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-//Render Home Page
+//Render Home Page Route
 app.get("/home", (req, res) => {
   res.render("home");
 });
