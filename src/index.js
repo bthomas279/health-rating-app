@@ -42,6 +42,9 @@ app.use(
     secret: process.env.SESSION_CODE, //Session password
     resave: true, //Controls if session is saved on every user habit data submission
     saveUninitialized: true, //Controls if empty sessions are saved
+    cookie: {
+      secure: false, //false due to use of localhost
+    }
   }),
 );
 

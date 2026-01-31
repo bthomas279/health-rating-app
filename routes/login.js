@@ -2,6 +2,8 @@ import express from "express";
 import bcrypt from "bcrypt";
 //Importing database
 import health_db from "../src/database.js";
+//This is for the server to remember the user_id
+import session from "express-session";
 
 const router = express.Router();
 
@@ -43,14 +45,31 @@ router.post("/", async (req, res) => {
     if (!match) {
       return res.status(401).send("Username or password is incorrect");
     }
-    //Successful connection. Send user to home_page.
-    console.log("Login successful!");
-    res.redirect("/home");
+    //If passwords match...
+    if (match) {
+        //Saves the user id to the session
+        req.session.userId = data_pull[0].user_id;
+        //Saves the username to the session
+        req.session.username = data_pull[0].username;
 
-    //With successful connection, saves session for user based on their user_id
-    req.session.userId = data_pull[0].user_id;
-    console.log(req.session.userId);
+        //Saves data
+        req.session.save(err) => {
+            if (err) {
+                console.error(err)
+                return res.redirect('login');
+            }
+        }
 
+
+    
+
+
+        //Successful connection. Send user to home_page.
+        console.log("Login successful!");
+        console.log(req.session.userId);
+        res.redirect("/home");
+    }
+   
     //Error catch
   } catch (err) {
     console.error(err);

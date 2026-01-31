@@ -1,6 +1,8 @@
 import express from "express";
 //Importing database to be used in index.js
 import health_db from "../src/database.js";
+//Used to transfer user_id between routes
+import session from "express-session";
 
 const router = express.Router();
 
