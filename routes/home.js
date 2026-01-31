@@ -17,8 +17,8 @@ router.post("/", async (req, res) => {
   //Used to define users on platform and filling user_id foreign key
   const userId = req.session.userId;
   const username = req.session.username;
-  console.log(userId)
-  
+  console.log(userId);
+
   //Check if the user_id is blank. If so, user is kicked to login page.
   if (!userId) {
     return res.redirect("/login");
