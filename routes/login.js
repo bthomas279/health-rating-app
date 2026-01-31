@@ -52,23 +52,21 @@ router.post("/", async (req, res) => {
         //Saves the username to the session
         req.session.username = data_pull[0].username;
 
-        //Saves data
-        req.session.save(err) => {
+        //Saves data. Returns to login page if error occurs
+        req.session.save((err) => {
             if (err) {
-                console.error(err)
+                console.error(err);
                 return res.redirect('login');
-            }
-        }
-
-
-    
-
-
+            }    
+         }); 
+        
         //Successful connection. Send user to home_page.
         console.log("Login successful!");
         console.log(req.session.userId);
+        console.log(req.session.username)
         res.redirect("/home");
-    }
+        
+    };
    
     //Error catch
   } catch (err) {

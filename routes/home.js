@@ -17,10 +17,10 @@ router.post("/", async (req, res) => {
   //Used to define users on platform and filling user_id foreign key
   const userId = req.session.userId;
   console.log(userId)
-
-  //Check if the user_id is blank. If so, user isn't allowed in
+  
+  //Check if the user_id is blank. If so, user is kicked to login page.
   if (!userId) {
-    return res.status(401).json({ error: "User ID is not found" });
+    return res.redirect("/login");
   }
 
   //Grab user input values
