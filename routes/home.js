@@ -5,12 +5,12 @@ import health_db from "../src/database.js";
 const router = express.Router();
 
 //Render Home Page Route
-router.get("/home", (req, res) => {
+router.get("/", (req, res) => {
   res.render("home");
 });
 
 //Transfer user habit input data to MySQL database------------------
-router.post("/home", async (req, res) => {
+router.post("/", async (req, res) => {
   //Defining userId
   //Used to define users on platform and filling user_id foreign key
   const userId = req.session.userId;
@@ -74,4 +74,4 @@ router.post("/home", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

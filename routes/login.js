@@ -6,13 +6,13 @@ import health_db from "../src/database.js";
 const router = express.Router();
 
 //Render Login Page Route
-router.get("/login", (req, res) => {
+router.get("/", (req, res) => {
   res.render("login");
 });
 
 //Check if the username and password match ones in the MySQL database-------------
 //If so, logs user in and sends them to home.ejs.
-router.post("/login", async (req, res) => {
+router.post("/", async (req, res) => {
   const { username, password } = req.body;
   //Testing connection
   console.log("Grabbed data");
@@ -58,4 +58,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
