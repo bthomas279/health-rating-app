@@ -1,5 +1,8 @@
 import express from "express";
-import router from express.Router();
+//Importing database to be used in index.js
+import health_db from "../src/database.js";
+
+const router = express.Router();
 
 //Render Home Page Route
 router.get("/home", (req, res) => {
@@ -70,3 +73,5 @@ router.post("/home", async (req, res) => {
     return res.status(500).send("Server Error inside home");
   }
 });
+
+module.exports = router;

@@ -1,6 +1,9 @@
 import express from "express";
-import router from express.Router();
+import bcrypt from "bcrypt";
+//Importing database to be used in index.js
+import health_db from "../src/database.js";
 
+const router = express.Router();
 
 //Render Signup Page Route
 router.get("/signup", (req, res) => {
@@ -87,3 +90,5 @@ app.post("/login", async (req, res) => {
     return res.status(500).send("Server Error inside login");
   }
 });
+
+module.exports = router;
