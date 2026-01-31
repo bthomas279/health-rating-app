@@ -16,6 +16,7 @@ router.post("/", async (req, res) => {
   //Defining userId
   //Used to define users on platform and filling user_id foreign key
   const userId = req.session.userId;
+  const username = req.session.username;
   console.log(userId)
   
   //Check if the user_id is blank. If so, user is kicked to login page.
@@ -56,7 +57,7 @@ router.post("/", async (req, res) => {
     daily_study_hours,
     social_media_hours,
     part_time_job,
-    extracurricular_participation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    extracurricular_participation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     //Send information to MySQL database
     await health_db.execute(sql, [

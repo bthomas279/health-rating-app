@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
 
   try {
     //Attempt to grab user_id, username column and password column from database
-    const sql = "SELECT user_id, user_password FROM users WHERE username = ?";
+    const sql = "SELECT user_id, username, user_password FROM users WHERE username = ?";
 
     //Use await instead of health_db query due to mysql2/promise
     //data_pull = Resulting in row grab from database or lack thereof
