@@ -6,20 +6,24 @@ import health_db from "../src/database.js";
 const router = express.Router();
 
 //Middleware user
-//Meant to cut user out of home page if they logout
+//Meant to cut user out of home page if they logout/don't have a session
 function userAuth(req, res, next) {
   //Returns user to login if they attempt to access the home page without a session
-  if (!req.session.user) {
+  if (!req.session.users) {
     return res.redirect("/login");
   }
   //Continue if session exists
   next();
 }
 
+//Activate function specifically in home router
+router.use(userAuth);
+
 //Render Home Page Route
 router.get("/", (req, res) => {
   res.render("home");
 });
+
 
 //Transfer user habit input data to MySQL database------------------
 router.post("/", async (req, res) => {

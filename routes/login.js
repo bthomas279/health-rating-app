@@ -50,8 +50,8 @@ router.post("/", async (req, res) => {
     if (match) {
       //Saves the user id and username to the session
       req.session.users = {
-        user_id: data_pull.user_id,
-        username: data_pull.username,
+        user_id: data_pull[0].user_id,
+        username: data_pull[0].username,
       };
 
       //req.session.userId = data_pull[0].user_id;
