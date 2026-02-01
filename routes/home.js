@@ -10,6 +10,11 @@ const router = express.Router();
 function userAuth(req, res, next) {
   //Returns user to login if they attempt to access the home page without a session
   if (!req.session.users) {
+    //Displays a message if user attempted to submit habit data in destroyed session
+    //Responds only when using router.post
+    if (req.method === "POST") {
+      return res.redirect("/login?reason=sessionDNE") // "Route,Query,parameter name=parameter value"
+    }
     return res.redirect("/login");
   }
   //Continue if session exists

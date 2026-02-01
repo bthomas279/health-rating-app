@@ -9,8 +9,13 @@ const router = express.Router();
 
 //Render Login Page Route
 router.get("/", (req, res) => {
-  res.render("login");
+  res.render("login", {
+    //Displays reason user was removed from home page if they attempted to enter their
+    //habit data.
+    reason: req.query.reason 
+  });
 });
+
 
 //Check if the username and password match ones in the MySQL database-------------
 //If so, logs user in and sends them to home.ejs.

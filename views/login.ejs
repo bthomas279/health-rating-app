@@ -1,12 +1,10 @@
 <html>
     <head>
         <title>Student Mental Health Rating App - Login Page</title>
-
-        <!--CSS Styling Link-->
         
     </head>
     <body>
-
+        <!-- Main Form -->
         <div class = "form-container">
             <h2>Login</h2>
             <form action = "/login" method = "post">
@@ -23,5 +21,11 @@
             <p>Don't have an account? Sign up <a href = "/signup">here</a></p>
         </div>
 
+        <!-- Flash Message Code -->
+        <% if (reason === "sessionDNE") {%>
+            <script >
+                alert("Previous session has expired.")
+            </script>
+        <% } %>
     </body>
 </html>
