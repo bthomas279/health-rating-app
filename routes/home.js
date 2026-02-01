@@ -1,14 +1,28 @@
 import express from "express";
+
 //Importing database to be used in index.js
 import health_db from "../src/database.js";
-//Used to transfer user_id between routes
-import session from "express-session";
+
 
 const router = express.Router();
 
 //Render Home Page Route
 router.get("/", (req, res) => {
   res.render("home");
+});
+
+//Get request to logout. Activates when clicking logout button.
+router.get("/logout", (req, res) => {
+  //Destroy session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+      return res.redirect("/home");
+    }
+    //Delete Cookie
+    res.clearCookie("connect.name");
+    res.redirect("login");
+  });
 });
 
 //Transfer user habit input data to MySQL database------------------
