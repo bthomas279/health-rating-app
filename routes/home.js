@@ -1,36 +1,25 @@
 import express from "express";
-
+import session from "express-session";
 //Importing database to be used in index.js
 import health_db from "../src/database.js";
 
-
 const router = express.Router();
+
+//Middleware user 
+//Meant to cut user out of home page if they logout or 
+
 
 //Render Home Page Route
 router.get("/", (req, res) => {
   res.render("home");
 });
 
-//Get request to logout. Activates when clicking logout button.
-router.get("/logout", (req, res) => {
-  //Destroy session
-  req.session.destroy((err) => {
-    if (err) {
-      console.error(err);
-      return res.redirect("/home");
-    }
-    //Delete Cookie
-    res.clearCookie("connect.name");
-    res.redirect("login");
-  });
-});
-
 //Transfer user habit input data to MySQL database------------------
 router.post("/", async (req, res) => {
   //Defining userId
   //Used to define users on platform and filling user_id foreign key
-  const userId = req.session.userId;
-  const username = req.session.username;
+  const userId = req.session.users.user_id;
+  const username = req.session.users.username;
   console.log(userId);
 
   //Check if the user_id is blank. If so, user is kicked to login page.

@@ -12,6 +12,7 @@ import session from "express-session";
 import signupRoute from "../routes/signup.js";
 import loginRoute from "../routes/login.js";
 import homeRoute from "../routes/home.js";
+import logoutRoute from "../routes/logout.js";
 
 //Dotenv configuration
 dotenv.config();
@@ -43,7 +44,7 @@ app.use(
     resave: true, //Controls if session is saved on every user habit data submission
     saveUninitialized: true, //Controls if empty sessions are saved
     cookie: {
-      secure: false, //false due to use of localhost
+      secure: false, //false due to use of  http
     }
   }),
 );
@@ -52,6 +53,7 @@ app.use(
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
 app.use("/home", homeRoute);
+app.use("/logout", logoutRoute);
 
 //Opens and runs the server to allow incoming requests
 app.listen(port, () => {
