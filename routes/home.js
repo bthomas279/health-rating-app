@@ -24,7 +24,8 @@ function userAuth(req, res, next) {
 //Activate function specifically in home router
 router.use(userAuth);
 
-//Render Home Page Route
+//REST APIs (GET, POST)
+//Render Home Page Route 
 router.get("/", (req, res) => {
   res.render("home");
 });

@@ -3,6 +3,7 @@ import session from "express-session";
 
 const router = express.Router();
 
+//REST APIs (GET, POST)
 //Get request to logout. Activates when clicking logout button.
 router.get("/", (req, res) => {
   //Destroy session

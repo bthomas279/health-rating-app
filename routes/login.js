@@ -7,6 +7,7 @@ import session from "express-session";
 
 const router = express.Router();
 
+//REST APIs (GET, POST)
 //Render Login Page Route
 router.get("/", (req, res) => {
   res.render("login", {

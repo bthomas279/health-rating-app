@@ -5,6 +5,7 @@ import health_db from "../src/database.js";
 
 const router = express.Router();
 
+//REST APIs (GET, POST)
 //Render Signup Page Route
 router.get("/", (req, res) => {
   res.render("signup");
