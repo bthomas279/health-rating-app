@@ -97,4 +97,9 @@ router.post("/", async (req, res) => {
   }
 });
 
+//POST (alert) for when user sucessfully submits their habit data to the database
+router.post("/home", async (req, res) => {
+  res.redirect("/home?success=true") //
+});
+
 export default router;
