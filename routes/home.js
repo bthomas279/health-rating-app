@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
 
   try {
     //Log data transfer
-    console.log("User habit data is transfering.");
+    console.log("User habit data is transferring.");
 
     //Database Querying
     const sql = `INSERT INTO user_habits (user_id, sleep_hours, tv_hours, diet_quality, 
