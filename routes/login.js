@@ -81,7 +81,7 @@ router.post("/", async (req, res) => {
     //Error catch
   } catch (err) {
     console.error(err);
-    return res.status(500).send("Server Error inside login").redirect ;
+    return res.status(500).send("Server Error inside login");
   }
 });
 

@@ -28,6 +28,10 @@
 
         <!-- Sign Up Error Message-->
         <!-- This message plays when the Sign Up fairs due to repeated usernames -->
-       
+       <% if (reason === "userExist") {%>
+            <script>
+                alert("Username already exists.")
+            </script>
+        <% } %>
     </body>
 </html>

@@ -8,7 +8,9 @@ const router = express.Router();
 //REST APIs (GET, POST)
 //Render Signup Page Route
 router.get("/", (req, res) => {
-  res.render("signup");
+  res.render("signup", {
+    reason: req.query.reason
+  });
 });
 
 //Register user and sends information from user to MySQL Database-------------------
@@ -35,13 +37,13 @@ router.post("/", async (req, res) => {
 
     //If Username/Password were added, sends user to login page
     res.redirect("/login");
+
   } catch (err) {
-    console.log("foo");
     //Flags send attempt if username was already used
     if (err.code === "ER_DUP_ENTRY") {
       //Database returns "ER_DUP_ENTRY
-      console.log("bar");
-      return res.status(400).send("Username already exists");
+      console.log("test reach");
+      return res.status(400).redirect("/signup?reason=userExist");
     }
     console.log("Account successfully registered!");
   }
