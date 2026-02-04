@@ -5,6 +5,24 @@ import health_db from "../src/database.js";
 
 const router = express.Router();
 
+function uniqueUser(req, res, next) {
+  //Query to grab all users in MySQL Database
+  const currentUsers = `SELECT username FROM users`;
+
+  if ((username = currentUsers)) {
+    //Responds when only using router.post
+    if (req.method === "POST") {
+      return res.redirect("/signup?reason=usernameExists"); //"Route,Query,parameter name=parameter value"
+    }
+    return res.redirect("/login");
+  }
+  //Continue if username is unique
+  next();
+}
+
+//Activates function specifically in the signup router
+router.use(uniqueUser);
+
 //REST APIs (GET, POST)
 //Render Signup Page Route
 router.get("/", (req, res) => {

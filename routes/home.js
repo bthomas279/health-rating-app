@@ -13,7 +13,7 @@ function userAuth(req, res, next) {
     //Displays a message if user attempted to submit habit data in destroyed session
     //Responds only when using router.post
     if (req.method === "POST") {
-      return res.redirect("/login?reason=sessionDNE") // "Route,Query,parameter name=parameter value"
+      return res.redirect("/login?reason=sessionDNE") //"Route,Query,parameter name=parameter value"
     }
     return res.redirect("/login");
   }
@@ -34,8 +34,9 @@ router.get("/", (req, res) => {
 //Transfer user habit input data to MySQL database------------------
 router.post("/", async (req, res) => {
   //Defining userId
-  //Used to define users on platform and filling user_id foreign key
+  //Used to define users on platform and filling user_id foreign key.
   const userId = req.session.users.user_id;
+  //Will eventually be used to display the username in the home page.
   const username = req.session.users.username;
 
   //Check if the user_id is blank. If so, user is kicked to login page.
