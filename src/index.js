@@ -22,7 +22,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
-//Tells app to use ejs. Use ejs as view engine
+//Tells app to use ejs. Use ejs as view engine.
 app.set("view engine", "ejs");
 
 //Middleware----------------------------

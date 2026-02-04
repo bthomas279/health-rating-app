@@ -11,8 +11,7 @@ const router = express.Router();
 //Render Login Page Route
 router.get("/", (req, res) => {
   res.render("login", {
-    //Displays reason user was removed from home page if they attempted to enter their
-    //habit data.
+    //Displays reason user was removed from home page if they attempted to enter their habit data.
     reason: req.query.reason 
   });
 });
@@ -82,7 +81,7 @@ router.post("/", async (req, res) => {
     //Error catch
   } catch (err) {
     console.error(err);
-    return res.status(500).send("Server Error inside login");
+    return res.status(500).send("Server Error inside login").redirect ;
   }
 });
 

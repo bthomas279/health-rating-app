@@ -5,24 +5,6 @@ import health_db from "../src/database.js";
 
 const router = express.Router();
 
-function uniqueUser(req, res, next) {
-  //Query to grab all users in MySQL Database
-  const currentUsers = `SELECT username FROM users`;
-
-  if ((username = currentUsers)) {
-    //Responds when only using router.post
-    if (req.method === "POST") {
-      return res.redirect("/signup?reason=usernameExists"); //"Route,Query,parameter name=parameter value"
-    }
-    return res.redirect("/login");
-  }
-  //Continue if username is unique
-  next();
-}
-
-//Activates function specifically in the signup router
-router.use(uniqueUser);
-
 //REST APIs (GET, POST)
 //Render Signup Page Route
 router.get("/", (req, res) => {
@@ -32,6 +14,7 @@ router.get("/", (req, res) => {
 //Register user and sends information from user to MySQL Database-------------------
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
+
   try {
     //Protecting user passwords through hash
     const hashPassword = await bcrypt.hash(password, 12);
@@ -47,16 +30,18 @@ router.post("/", async (req, res) => {
 
     //Database Querying
     const sql = `INSERT INTO users (username, user_password) VALUES (?, ?)`;
+    //Adding username and password to database
     await health_db.execute(sql, [username, hashPassword]);
 
     //If Username/Password were added, sends user to login page
     res.redirect("/login");
   } catch (err) {
+    console.log("foo");
     //Flags send attempt if username was already used
     if (err.code === "ER_DUP_ENTRY") {
-      return res.status(400).render("/signup", {
-        error: "Username already exists. Please select a different username.",
-      });
+      //Database returns "ER_DUP_ENTRY
+      console.log("bar");
+      return res.status(400).send("Username already exists");
     }
     console.log("Account successfully registered!");
   }
