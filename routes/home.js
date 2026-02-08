@@ -76,7 +76,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    //Log data transfer
+    //Log the data transfer
     console.log("User habit data is transferring.");
 
     //Database Querying
