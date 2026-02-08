@@ -24,6 +24,7 @@ function userAuth(req, res, next) {
 //Activate function specifically in home router
 router.use(userAuth);
 
+
 //REST APIs (GET, POST)
 //Render Home Page Route 
 router.get("/", (req, res) => {
@@ -55,6 +56,7 @@ router.post("/", async (req, res) => {
     part_time_job,
     extracurricular_participation,
   } = req.body;
+
   //Testing grab
   console.log(
     sleep_hours,
@@ -66,6 +68,12 @@ router.post("/", async (req, res) => {
     part_time_job,
     extracurricular_participation,
   );
+
+  //Check if any of the multichoice options are blank (default value: placeholder)
+  //WORKS BUT NOT FINISHED YET! STILL NEED TO ADD ALERT
+  if (diet_quality || part_time_job || extracurricular_participation === "placeholder") {
+    return res.render("home", { error: "questionsBlank"} )
+  }
 
   try {
     //Log data transfer
@@ -100,7 +108,7 @@ router.post("/", async (req, res) => {
 });
 
 //POST (alert) for when user sucessfully submits their habit data to the database
-//CURRENTLY NOT BEING USED
+//CURRENTLY NOT BEING USED! Does not operate!
 router.post("/home", async (req, res) => {
   res.redirect("/home?success=true") 
 });

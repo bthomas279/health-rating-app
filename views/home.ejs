@@ -22,16 +22,16 @@
                 <form action = "/home" id = "health_input_form" method = "post">
                     <h2>Sleep Hours Input</h2>
                     <p>On average, how many hours of sleep do you get per day? (Round to one decimal place).</p>
-                    <input type = "text" id = "userSleep" name = "sleep_hours">
+                    <input type = "text" id = "userSleep" name = "sleep_hours" required>
                     
                     <h2>Tv Hours Input</h2>
                     <p>On average, how many hours of TV do you watch per day? (Round to one decimal place).</p>
-                    <input type = "text" id = "userTvHours" name = "tv_hours">
+                    <input type = "text" id = "userTvHours" name = "tv_hours" required>
                     
                     <h2>Diet Quality Input</h2>
                     <label for = "userInputDQ">What is your typical diet quality?</label>
                         <select id = "userDiet" name = "diet_quality">
-                            <option value = "Placeholder"></option>
+                            <option value = "placeholder"></option>
                             <option value = "Poor">Poor</option>
                             <option value = "Fair">Fair</option>
                             <option value = "Good">Good</option>
@@ -40,15 +40,15 @@
                     
                     <h2>Exercise Frequency Weekly Input</h2>
                     <p>On average, how many times do you exercise per week? (Answer in whole numbers).</p>
-                    <input type = "text" id = "userExercise" name = "exercise_frequency_weekly">
+                    <input type = "text" id = "userExercise" name = "exercise_frequency_weekly" required>
                     
                     <h2>Daily Study Hours Input</h2>
                     <p>On average, how many hours do you participate in academic work/study per day? (Round to one decimal place).</p>
-                    <input type = "text" id = "userStudy" name = "daily_study_hours">
+                    <input type = "text" id = "userStudy" name = "daily_study_hours" required>
                     
                     <h2>Social Media Hours Input</h2>
                     <p>On average, how many hours are you on social media daily? (Round to one decimal place).</p>
-                    <input type = "text" id = "userSocialMedia" name = "social_media_hours">
+                    <input type = "text" id = "userSocialMedia" name = "social_media_hours" required>
                     
                     <h2>Part Time Job Input</h2>
                     <label for = "userInputPTJ">Do you have a part time job?</label>
@@ -72,6 +72,7 @@
 
                 <hr id = "line">
                 <div id = "modelRating">Placeholder</div>
+
             </section>
         </div>
 
