@@ -28,7 +28,10 @@ router.use(userAuth);
 //REST APIs (GET, POST)
 //Render Home Page Route 
 router.get("/", (req, res) => {
-  res.render("home");
+  res.render("home", {
+    //If home re-renders due empty answer submissions, displays error message.
+    reason: req.query.reason
+  });
 });
 
 
@@ -72,7 +75,8 @@ router.post("/", async (req, res) => {
   //Check if any of the multichoice options are blank (default value: placeholder)
   //WORKS BUT NOT FINISHED YET! STILL NEED TO ADD ALERT
   if (diet_quality || part_time_job || extracurricular_participation === "placeholder") {
-    return res.render("home", { error: "questionsBlank"} )
+    //return res.render("home", { error: "questionsBlank"} )
+    return res.redirect("/home?reason=questionBlank")
   }
 
   try {

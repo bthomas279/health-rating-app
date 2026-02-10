@@ -75,6 +75,11 @@
 
             </section>
         </div>
-
+        <!-- Flash Message Code -->
+        <% if (reason === "questionBlank") {%>
+            <script>
+                alert("Please answer all questions.")
+            </script>
+        <% } %>
     </body>
 </html>
