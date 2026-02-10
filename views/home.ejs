@@ -30,8 +30,8 @@
                     
                     <h2>Diet Quality Input</h2>
                     <label for = "userInputDQ">What is your typical diet quality?</label>
-                        <select id = "userDiet" name = "diet_quality">
-                            <option value = "placeholder"></option>
+                        <select id = "userDiet" name = "diet_quality" required>
+                            <option></option>
                             <option value = "Poor">Poor</option>
                             <option value = "Fair">Fair</option>
                             <option value = "Good">Good</option>
@@ -52,16 +52,16 @@
                     
                     <h2>Part Time Job Input</h2>
                     <label for = "userInputPTJ">Do you have a part time job?</label>
-                        <select id = "userJob" name = "part_time_job">
-                            <option value = "placeholder"></option>
+                        <select id = "userJob" name = "part_time_job" required>
+                            <option></option>
                             <option value = "Yes">Yes</option>
                             <option value = "No">No</option>
                         </select>
 
                     <h2>Extracurricular Input</h2>
                     <label for = "userInputEC">Do you participate in extracurricular activities?</label>
-                        <select id = "userExtracurricular" name = "extracurricular_participation">
-                            <option value = "placeholder"></option>
+                        <select id = "userExtracurricular" name = "extracurricular_participation" required>
+                            <option></option>
                             <option value = "Yes">Yes</option>
                             <option value = "No">No</option>
                         </select>
@@ -75,11 +75,5 @@
 
             </section>
         </div>
-        <!-- Flash Message Code -->
-        <% if (reason === "questionBlank") {%>
-            <script>
-                alert("Please answer all questions.")
-            </script>
-        <% } %>
     </body>
 </html>

@@ -13,7 +13,7 @@ function userAuth(req, res, next) {
     //Displays a message if user attempted to submit habit data in destroyed session
     //Responds only when using router.post
     if (req.method === "POST") {
-      return res.redirect("/login?reason=sessionDNE") //"Route,Query,parameter name=parameter value"
+      return res.redirect("/login?reason=sessionDNE"); //"Route,Query,parameter name=parameter value"
     }
     return res.redirect("/login");
   }
@@ -24,16 +24,11 @@ function userAuth(req, res, next) {
 //Activate function specifically in home router
 router.use(userAuth);
 
-
 //REST APIs (GET, POST)
-//Render Home Page Route 
+//Render Home Page Route
 router.get("/", (req, res) => {
-  res.render("home", {
-    //If home re-renders due empty answer submissions, displays error message.
-    reason: req.query.reason
-  });
+  res.render("home");
 });
-
 
 //Transfer user habit input data to MySQL database------------------
 router.post("/", async (req, res) => {
@@ -72,13 +67,6 @@ router.post("/", async (req, res) => {
     extracurricular_participation,
   );
 
-  //Check if any of the multichoice options are blank (default value: placeholder)
-  //WORKS BUT NOT FINISHED YET! STILL NEED TO ADD ALERT
-  if (diet_quality || part_time_job || extracurricular_participation === "placeholder") {
-    //return res.render("home", { error: "questionsBlank"} )
-    return res.redirect("/home?reason=questionBlank")
-  }
-
   try {
     //Log the data transfer
     console.log("User habit data is transferring.");
@@ -90,7 +78,7 @@ router.post("/", async (req, res) => {
     social_media_hours,
     part_time_job,
     extracurricular_participation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
+    
     //Send information to MySQL database
     await health_db.execute(sql, [
       userId,
@@ -103,7 +91,7 @@ router.post("/", async (req, res) => {
       part_time_job,
       extracurricular_participation,
     ]);
-
+  
     console.log("Data transfer successful");
   } catch (err) {
     console.error(err);
@@ -113,8 +101,8 @@ router.post("/", async (req, res) => {
 
 //POST (alert) for when user sucessfully submits their habit data to the database
 //CURRENTLY NOT BEING USED! Does not operate!
-router.post("/home", async (req, res) => {
-  res.redirect("/home?success=true") 
-});
+//router.post("/home", async (req, res) => {
+//res.redirect("/home?success=true")
+//});
 
 export default router;
