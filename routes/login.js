@@ -59,10 +59,6 @@ router.post("/", async (req, res) => {
         username: data_pull[0].username,
       };
 
-      //req.session.userId = data_pull[0].user_id;
-      //Saves the username to the session
-      //req.session.username = data_pull[0].username;
-
       //Saves session. Returns to login page if error occurs
       req.session.save((err) => {
         if (err) {
