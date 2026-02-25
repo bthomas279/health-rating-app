@@ -67,7 +67,7 @@
                         </select>
                     <br><br>
 
-                    <button role = "button" id = "submit_button" onclick="userSubmit()">Calculate Mental Health Score!</button>
+                    <button role = "button" id = "submit_button">Calculate Mental Health Score!</button>
                 </form>
 
                 <hr id = "line">
@@ -77,9 +77,19 @@
         </div>
         <!--Javascript Code -->
         <script>
-            function userSubmit() {
-                alert("Submission Successful.")
+            //Function that takes in the user data inputed, connects with the ml model,
+            //and returns with a rating.
+            async function mentalRating() {
+                
+                //Grab the inputed values
+                const sleep = document.getElementById("userSleep").value;
+                
+                
+                //The fetch requet
+                //This connects with the ML model using FAST API
+                const callModel = await fetch("http://127.0.0.1:8000/users");
             }
+
         </script>
     </body>
 </html>
