@@ -1,5 +1,6 @@
 # health-rating-app
 **IMPORTANT NOTICE: This project is still under development.**
+
 Planned development:
 1. Machine learning model requests and responses using FAST API.
 2. Mental Health Data visualization talored for each user.
