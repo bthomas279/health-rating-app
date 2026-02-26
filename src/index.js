@@ -45,12 +45,12 @@ app.use(
     resave: true, //Controls if session is saved on every user habit data submission
     saveUninitialized: true, //Controls if empty sessions are saved
     cookie: {
-      secure: false, //false due to use of  http
+      secure: false, //false due to use of http
     }
   }),
 );
 
-//Access all three routes from the routes folder
+//Access all routes from the routes folder
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
 app.use("/home", homeRoute);

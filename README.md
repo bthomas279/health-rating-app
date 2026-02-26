@@ -1,5 +1,5 @@
 # health-rating-app
-
+IMPORTANT NOTICE: This project is still under development.
 
 ## About
 
@@ -16,7 +16,8 @@ public/
 routes/
 ├──home.js                 # Contains styling for login and signup page 
 ├──login.js                # Contains REST APIs to run login action, creates a session for the user
-├──logout.js               # Contain REST APIs to run logout action and destroy the session
+
+├──logout.js               # Contains REST APIs to run logout action and can destroys the session
 ├──signup.js               # Puts the user into the system (SQL query and REST), enabling ability to login 
 └──universal.js            # Global rerouting in case user location is "/"
 

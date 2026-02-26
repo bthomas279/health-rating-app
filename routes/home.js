@@ -8,8 +8,10 @@ const router = express.Router();
 //Middleware user
 //Meant to cut user out of home page if they logout/don't have a session
 function userAuth(req, res, next) {
+  
   //Returns user to login if they attempt to access the home page without a session
   if (!req.session.users) {
+
     //Displays a message if user attempted to submit habit data in destroyed session
     //Responds only when using router.post
     if (req.method === "POST") {
@@ -17,8 +19,10 @@ function userAuth(req, res, next) {
     }
     return res.redirect("/login");
   }
+
   //Continue if session exists
   next();
+
 }
 
 //Activate function specifically in home router
@@ -32,9 +36,11 @@ router.get("/", (req, res) => {
 
 //Transfer user habit input data to MySQL database------------------
 router.post("/", async (req, res) => {
+ 
   //Defining userId
   //Used to define users on platform and filling user_id foreign key.
   const userId = req.session.users.user_id;
+  
   //Will eventually be used to display the username in the home page.
   const username = req.session.users.username;
 
