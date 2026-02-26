@@ -69,8 +69,6 @@ router.post("/", async (req, res) => {
 
       //Successful connection. Send user to home_page.
       console.log("Login successful!");
-      //console.log(req.session.userId);
-      //console.log(req.session.username)
       res.redirect("/home");
     }
 

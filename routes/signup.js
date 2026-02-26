@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
   } catch (err) {
     //Flags send attempt if username was already used
     if (err.code === "ER_DUP_ENTRY") {
-      //Database returns "ER_DUP_ENTRY
+      //Database returns "ER_DUP_ENTRY"
       console.log("test reach");
       return res.status(400).redirect("/signup?reason=userExist");
       r

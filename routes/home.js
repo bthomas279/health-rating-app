@@ -107,8 +107,8 @@ router.post("/", async (req, res) => {
 
 //POST (alert) for when user sucessfully submits their habit data to the database
 //CURRENTLY NOT BEING USED! Does not operate!
-router.post("/home", async (req, res) => {
-res.redirect("/home?success=true")
-});
+//router.post("/home", async (req, res) => {
+//res.redirect("/home?success=true")
+//});
 
 export default router;

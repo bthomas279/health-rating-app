@@ -1,8 +1,11 @@
 # health-rating-app
-IMPORTANT NOTICE: This project is still under development.
+**IMPORTANT NOTICE: This project is still under development.**
+Planned development:
+1. Machine learning model requests and responses using FAST API.
+2. Mental Health Data visualization talored for each user.
 
 ## About
-
+This project is a full-stack student mental health rating system involving a MySQL database to house user information and a machine learning model. 
 
 
 ## Features
@@ -17,7 +20,6 @@ public/
 routes/
 ├──home.js                 # Contains styling for login and signup page 
 ├──login.js                # Contains REST APIs to run login action, creates a session for the user
-
 ├──logout.js               # Contains REST APIs to run logout action and can destroys the session
 ├──signup.js               # Puts the user into the system (SQL query and REST), enabling ability to login 
 └──universal.js            # Global rerouting in case user location is "/"
@@ -39,3 +41,4 @@ views/
 
 
 ## Programmer
+This project is being developed by Benjamin Thomas as a personal project.
