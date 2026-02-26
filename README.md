@@ -5,11 +5,9 @@ Planned development:
 2. Mental Health Data visualization talored for each user.
 
 ## About
-This project is a full-stack student mental health rating system involving a MySQL database to house user information and a machine learning model. 
-
+This project is a full-stack student mental health rating system that uses Node.js, EJS, and Javascript to generate mental health ratings based on stored habit data, and provide user-tailored visualizations.
 
 ## Features
-
 
 
 ## Project Structure
