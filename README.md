@@ -10,6 +10,7 @@ IMPORTANT NOTICE: This project is still under development.
 
 
 ## Project Structure
+```
 public/
 └──style.css               # Contains styling for login and signup page 
 
@@ -30,7 +31,7 @@ views/
 ├──login.ejs                # Serves as the front end for the login page
 └──signup.js                # Serves as the front end for the signup page
 
-
+```
 
 ## File Uses
 
