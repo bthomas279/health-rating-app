@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
     }
     //Delete Cookie
     res.clearCookie("connect.sid"); //Default name: sid
-    //Alert console and the user of successful logout in console
+    //Alert console of successful logout in console
     console.log("User has been logged out.")
 
     //Return to login page

@@ -1,11 +1,13 @@
 <html>
     <head>
         <title>Student Mental Health Rating App - Main Page</title>
+        
+        <!--Connection to model_call js file-->
+
     </head>
     <body>
         <!-- Header -->    
         <h1>Student Mental Health App</h1>
-
 
         <!-- Nav Placement -->
         <hr id = "line">
@@ -32,10 +34,11 @@
                     <label for = "userInputDQ">What is your typical diet quality?</label>
                         <select id = "userDiet" name = "diet_quality" required>
                             <option></option>
-                            <option value = "Poor">Poor</option>
-                            <option value = "Fair">Fair</option>
-                            <option value = "Good">Good</option>
-                            <option value = "Other">Other</option>
+                            <!--Values: Fair = 0, Good = 1, Poor = 2, Other = 3-->
+                            <option value = "2">Poor</option>
+                            <option value = "0">Fair</option>
+                            <option value = "1">Good</option>
+                            <option value = "3">Other</option>
                         </select>
                     
                     <h2>Exercise Frequency Weekly Input</h2>
@@ -54,16 +57,18 @@
                     <label for = "userInputPTJ">Do you have a part time job?</label>
                         <select id = "userJob" name = "part_time_job" required>
                             <option></option>
-                            <option value = "Yes">Yes</option>
-                            <option value = "No">No</option>
+                            <!--Values: No = 0, Yes = 1-->
+                            <option value = "1">Yes</option>
+                            <option value = "0">No</option>
                         </select>
 
                     <h2>Extracurricular Input</h2>
                     <label for = "userInputEC">Do you participate in extracurricular activities?</label>
                         <select id = "userExtracurricular" name = "extracurricular_participation" required>
                             <option></option>
-                            <option value = "Yes">Yes</option>
-                            <option value = "No">No</option>
+                            <!--Values: No = 0, Yes = 1-->
+                            <option value = "1">Yes</option>
+                            <option value = "0">No</option>
                         </select>
                     <br><br>
 
@@ -75,21 +80,6 @@
 
             </section>
         </div>
-        <!--Javascript Code (STILL UNDER DEVELOPMENT) -->
-        <script>
-            //Function that takes in the user data inputed, connects with the ml model,
-            //and returns with a rating.
-            async function mentalRating() {
-                
-                //Grab the inputed values
-                const sleep = document.getElementById("userSleep").value;
-                
-                
-                //The fetch requet
-                //This connects with the ML model using FAST API
-                const callModel = await fetch("http://127.0.0.1:8000/users");
-            }
-
-        </script>
+        <!--JavaScript code for model fetch calls are in static/model_call.js-->
     </body>
 </html>

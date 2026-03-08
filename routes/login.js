@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
     const hashPassword = data_pull[0].user_password;
 
     //Console log update
-    console.log("Checking info entered -", "Username:", username);
+    console.log("Checking info entered");
 
     //Variable to compare inputed password and password in database
     const match = await bcrypt.compare(password, hashPassword);

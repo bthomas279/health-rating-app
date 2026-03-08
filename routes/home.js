@@ -22,7 +22,6 @@ function userAuth(req, res, next) {
 
   //Continue if session exists
   next();
-
 }
 
 //Activate function specifically in home router
