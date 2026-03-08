@@ -19,7 +19,7 @@ public/
 routes/
 ├──home.js                 # Contains styling for login and signup page 
 ├──login.js                # Contains REST APIs to run login action, creates a session for the user
-├──logout.js               # Contains REST APIs to run logout action and can destroys the session
+├──logout.js               # Contains REST APIs to run logout action and can destroy the session
 ├──signup.js               # Puts the user into the system (SQL query and REST), enabling ability to login 
 └──universal.js            # Global rerouting in case user location is "/"
 

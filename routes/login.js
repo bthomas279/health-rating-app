@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
     //Console log update
     console.log("Checking info entered -", "Username:", username);
 
-    //Var to Compare inputed password and password in database
+    //Variable to compare inputed password and password in database
     const match = await bcrypt.compare(password, hashPassword);
 
     //If passwords don't match, sends error.
