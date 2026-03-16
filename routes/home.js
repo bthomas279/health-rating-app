@@ -1,17 +1,17 @@
 import express from "express";
 import session from "express-session";
-//Importing database to be used in index.js
+//Importing database to be used in form submission
 import health_db from "../src/database.js";
+//Importing model fetch
+import modelCall from "../src/model_call.js";
 
 const router = express.Router();
 
 //Middleware user
 //Meant to cut user out of home page if they logout/don't have a session
 function userAuth(req, res, next) {
-  
   //Returns user to login if they attempt to access the home page without a session
   if (!req.session.users) {
-
     //Displays a message if user attempted to submit habit data in destroyed session
     //Responds only when using router.post
     if (req.method === "POST") {
@@ -30,16 +30,20 @@ router.use(userAuth);
 //REST APIs (GET, POST)
 //Render Home Page Route
 router.get("/", (req, res) => {
-  res.render("home");
+  //Obj to contain all query parameters (predicted rating  ie. (rating: x)). 
+  const rating = req.query.rating || null;
+  //Assign req.query.rating to rating value if exists, undefined if not.
+
+  res.render("home", { rating });
 });
 
+
 //Transfer user habit input data to MySQL database------------------
-router.post("/", async (req, res) => {
- 
+router.post("/submit", async (req, res) => {
   //Defining userId
   //Used to define users on platform and filling user_id foreign key.
   const userId = req.session.users.user_id;
-  
+
   //Will eventually be used to display the username in the home page.
   const username = req.session.users.username;
 
@@ -61,20 +65,21 @@ router.post("/", async (req, res) => {
   } = req.body;
 
   //Testing grab
-  console.log(
-    sleep_hours,
+  const user_data =
+    {sleep_hours,
     tv_hours,
     diet_quality,
     exercise_frequency_weekly,
     daily_study_hours,
     social_media_hours,
     part_time_job,
-    extracurricular_participation,
-  );
+    extracurricular_participation};
+
+  console.log(user_data);
 
   try {
     //Log the data transfer
-    console.log("User habit data is transferring.");
+    console.log("User habit data is transferring to database.");
 
     //Database Querying
     const sql = `INSERT INTO user_habits (user_id, sleep_hours, tv_hours, diet_quality, 
@@ -83,7 +88,7 @@ router.post("/", async (req, res) => {
     social_media_hours,
     part_time_job,
     extracurricular_participation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    
+
     //Send information to MySQL database
     await health_db.execute(sql, [
       userId,
@@ -96,18 +101,25 @@ router.post("/", async (req, res) => {
       part_time_job,
       extracurricular_participation,
     ]);
-  
     console.log("Data transfer successful");
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send("Server Error inside home");
+  } catch (dberr) {
+    console.error("Database error", dberr);
+    return res.status(500).send("Database Server Error inside home");
+  }
+
+  //Model calling
+  try {
+    console.log("Attempting to call model")
+
+    const rating = await modelCall(user_data);
+    
+    console.log(rating)
+
+  } catch (mlerr) {
+    //Error message for rating
+    console.error("Model error", mlerr);
+    return res.status(500).send("Model Server Error inside home");
   }
 });
-
-//POST (alert) for when user sucessfully submits their habit data to the database
-//CURRENTLY NOT BEING USED! Does not operate!
-//router.post("/home", async (req, res) => {
-//res.redirect("/home?success=true")
-//});
 
 export default router;
