@@ -4,7 +4,8 @@ async function modelCall(user) {
   //their proper floats and integers. I may do this on the model side in the future.
 
   //Check what's inside of user
-  console.log("In Model Call, the User contains:", user);
+  //console.log("In Model Call, the User contains:", user);
+  
   //Some of the data are words. Code to change them into str numbers
   //For diet quality
 
@@ -54,7 +55,7 @@ async function modelCall(user) {
     part_time_job: job_int,
     extracurricular_participation: ep_int,
   };
-  console.log("This is userInt:", userInt);
+  //console.log("This is userInt:", userInt);
 
   //Call model
   const model_response = await fetch("http://127.0.0.1:8000/grab/", {

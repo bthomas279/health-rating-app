@@ -31,7 +31,7 @@ router.use(userAuth);
 //Render Home Page Route
 router.get("/", (req, res) => {
   //Obj to contain all query parameters (predicted rating  ie. (rating: x)).
-  const response = req.query.response || null;
+  const response = req.query.response.rating || null;
   //Assign req.query.rating to rating value if exists, undefined if not.
 
   res.render("home", { response });
@@ -104,7 +104,12 @@ router.post("/submit", async (req, res) => {
     const response = await modelCall(req.body);
 
     //View connection output
-    console.log(response);
+    //Rating
+    console.log("The model's rating:",response.rating);
+    //Values model viewed
+    console.log("The model saw this:",response.users_data)
+
+
   } catch (ml_err) {
     //Error message for rating
     console.error("Model error:", ml_err);
