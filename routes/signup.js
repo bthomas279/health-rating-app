@@ -25,9 +25,7 @@ router.post("/", async (req, res) => {
     console.log(
       "The app is sending username and password",
       "Username:",
-      username,
-      "Password:",
-      hashPassword,
+      username
     );
 
     //Database Querying
