@@ -62,6 +62,7 @@ router.post("/submit", async (req, res) => {
     part_time_job,
     extracurricular_participation,
   } = req.body;
+  console.log(req.body);
 
   try {
     //Log the data transfer
@@ -100,27 +101,17 @@ router.post("/submit", async (req, res) => {
     console.log("Attempting to call model");
 
     //Call model
-    const response = await modelCall(
-      sleep_hours,
-      tv_hours,
-      diet_quality,
-      exercise_frequency_weekly,
-      daily_study_hours,
-      social_media_hours,
-      part_time_job,
-      extracurricular_participation,
-    );
+    const response = await modelCall(req.body);
 
     //View connection output
     console.log(response);
-
-
   } catch (ml_err) {
     //Error message for rating
     console.error("Model error:", ml_err);
-    return res.status(500).send("Model Server Error inside home");
+    return res
+      .status(500)
+      .send("Model Server Error inside home (Model server may be off)");
   }
 });
 
 export default router;
-
