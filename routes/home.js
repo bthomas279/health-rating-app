@@ -30,13 +30,12 @@ router.use(userAuth);
 //REST APIs (GET, POST)
 //Render Home Page Route
 router.get("/", (req, res) => {
-  //Obj to contain all query parameters (predicted rating  ie. (rating: x)). 
-  const rating = req.query.rating || null;
+  //Obj to contain all query parameters (predicted rating  ie. (rating: x)).
+  const response = req.query.response || null;
   //Assign req.query.rating to rating value if exists, undefined if not.
 
-  res.render("home", { rating });
+  res.render("home", { response });
 });
-
 
 //Transfer user habit input data to MySQL database------------------
 router.post("/submit", async (req, res) => {
@@ -64,22 +63,9 @@ router.post("/submit", async (req, res) => {
     extracurricular_participation,
   } = req.body;
 
-  //Testing grab
-  const user_data =
-    {sleep_hours,
-    tv_hours,
-    diet_quality,
-    exercise_frequency_weekly,
-    daily_study_hours,
-    social_media_hours,
-    part_time_job,
-    extracurricular_participation};
-
-  console.log(user_data);
-
   try {
     //Log the data transfer
-    console.log("User habit data is transferring to database.");
+    console.log("User habit data attempting transfer to database.");
 
     //Database Querying
     const sql = `INSERT INTO user_habits (user_id, sleep_hours, tv_hours, diet_quality, 
@@ -102,24 +88,39 @@ router.post("/submit", async (req, res) => {
       extracurricular_participation,
     ]);
     console.log("Data transfer successful");
-  } catch (dberr) {
-    console.error("Database error", dberr);
+  } catch (db_err) {
+    console.error("Database error", db_err);
     return res.status(500).send("Database Server Error inside home");
   }
 
-  //Model calling
+  //Model calling----------------------
+  //Turn strings into integers
+
   try {
-    console.log("Attempting to call model")
+    console.log("Attempting to call model");
 
-    const rating = await modelCall(user_data);
-    
-    console.log(rating)
+    //Call model
+    const response = await modelCall(
+      sleep_hours,
+      tv_hours,
+      diet_quality,
+      exercise_frequency_weekly,
+      daily_study_hours,
+      social_media_hours,
+      part_time_job,
+      extracurricular_participation,
+    );
 
-  } catch (mlerr) {
+    //View connection output
+    console.log(response);
+
+
+  } catch (ml_err) {
     //Error message for rating
-    console.error("Model error", mlerr);
+    console.error("Model error:", ml_err);
     return res.status(500).send("Model Server Error inside home");
   }
 });
 
 export default router;
+

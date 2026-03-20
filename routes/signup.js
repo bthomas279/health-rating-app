@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
       //Database returns "ER_DUP_ENTRY"
       console.log("test reach");
       return res.status(400).redirect("/signup?reason=userExist");
-      r
+      
     }
     console.log("Account successfully registered!");
   }

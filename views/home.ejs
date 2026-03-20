@@ -35,10 +35,10 @@
                         <select id = "userDiet" name = "diet_quality" required>
                             <option></option>
                             <!--Values: Fair = 0, Good = 1, Poor = 2, Other = 3-->
-                            <option value = "2">Poor</option>
-                            <option value = "0">Fair</option>
-                            <option value = "1">Good</option>
-                            <option value = "3">Other</option>
+                            <option value = "Poor">Poor</option>
+                            <option value = "Fair">Fair</option>
+                            <option value = "Good">Good</option>
+                            <option value = "Other">Other</option>
                         </select>
                     
                     <h2>Exercise Frequency Weekly Input</h2>
@@ -58,8 +58,8 @@
                         <select id = "userJob" name = "part_time_job" required>
                             <option></option>
                             <!--Values: No = 0, Yes = 1-->
-                            <option value = "1">Yes</option>
-                            <option value = "0">No</option>
+                            <option value = "Yes">Yes</option>
+                            <option value = "No">No</option>
                         </select>
 
                     <h2>Extracurricular Input</h2>
@@ -67,8 +67,8 @@
                         <select id = "userExtracurricular" name = "extracurricular_participation" required>
                             <option></option>
                             <!--Values: No = 0, Yes = 1-->
-                            <option value = "1">Yes</option>
-                            <option value = "0">No</option>
+                            <option value = "Yes">Yes</option>
+                            <option value = "No">No</option>
                         </select>
                     <br><br>
 
@@ -80,7 +80,7 @@
         </div>
         <!--JavaScript code for prediction result-->
         <!--Shows the rating predicted by the model if it exists-->
-        <% if (rating) { %>
+        <% if (response) { %>
             <p>Mental Health Rating: <%= rating  %></p>
         <% } %>
     </body>
