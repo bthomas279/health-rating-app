@@ -30,15 +30,11 @@ router.use(userAuth);
 //REST APIs (GET, POST)
 //Render Home Page Route
 router.get("/", (req, res) => {
-  //Obj to contain all query parameters (predicted rating  ie. (rating: x)).
-  const response = req.query.response.rating || null;
-  //Assign req.query.rating to rating value if exists, undefined if not.
-
-  res.render("home", { response });
+  res.render("home", { rating: null }); //Prevents a blank rating from automatically appearing
 });
 
-//Transfer user habit input data to MySQL database------------------
 router.post("/submit", async (req, res) => {
+  //Transfer user habit input data to MySQL database------------------
   //Defining userId
   //Used to define users on platform and filling user_id foreign key.
   const userId = req.session.users.user_id;
@@ -62,7 +58,6 @@ router.post("/submit", async (req, res) => {
     part_time_job,
     extracurricular_participation,
   } = req.body;
-  console.log(req.body);
 
   try {
     //Log the data transfer
@@ -95,7 +90,6 @@ router.post("/submit", async (req, res) => {
   }
 
   //Model calling----------------------
-  //Turn strings into integers
 
   try {
     console.log("Attempting to call model");
@@ -103,13 +97,17 @@ router.post("/submit", async (req, res) => {
     //Call model
     const response = await modelCall(req.body);
 
+    //Define rating value
+    const modelRating = response.rating;
+
     //View connection output
     //Rating
-    console.log("The model's rating:",response.rating);
+    console.log("The model's rating:", modelRating);
     //Values model viewed
-    console.log("The model saw this:",response.users_data)
+    console.log("The model saw this:", response.users_data);
 
-
+    //Render the home page with the rating in.
+    res.render("home", { rating: modelRating });
   } catch (ml_err) {
     //Error message for rating
     console.error("Model error:", ml_err);
