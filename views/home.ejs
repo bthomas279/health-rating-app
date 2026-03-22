@@ -10,19 +10,24 @@
         <h1>Student Mental Health App</h1>
         <p>Ratings are on a scale of 0 - 1</p>
 
+        <!-- Click me to logout -->
+        <a href = "/logout"><button>Logout</button></a>
+
         <!-- Nav Placement -->
         <hr id = "line">
         <br>
 
         <!-- Main User Input Area -->
         <div class = "main_content">
+            <!--Shows the rating predicted by the model if it exists-->
+            <% if (rating) { %>
+                <p>Mental Health Rating: <%= rating  %></p>
+            <% } %>
 
-            <!-- Click me to logout -->
-            <a href = "/logout"><button>Logout</button></a>
 
             <!-- Habat data form -->
             <section>
-                <form action = "/home/submit" id = "health_input_form" method = "post">
+                <form action = "/home" id = "health_input_form" method = "post">
                     <h2>Sleep Hours Input</h2>
                     <p>On average, how many hours of sleep do you get per day? (Round to one decimal place).</p>
                     <input type = "text" id = "userSleep" name = "sleep_hours" required>
@@ -80,9 +85,6 @@
             </section>
         </div>
         <!--JavaScript code for prediction result-->
-        <!--Shows the rating predicted by the model if it exists-->
-        <% if (rating) { %>
-            <p>Mental Health Rating: <%= rating  %></p>
-        <% } %>
+        
     </body>
 </html>

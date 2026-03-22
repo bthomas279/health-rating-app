@@ -7,7 +7,7 @@ import modelCall from "../src/model_call.js";
 
 const router = express.Router();
 
-//Middleware user
+//Middleware-------------------
 //Meant to cut user out of home page if they logout/don't have a session
 function userAuth(req, res, next) {
   //Returns user to login if they attempt to access the home page without a session
@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
   res.render("home", { rating: null }); //Prevents a blank rating from automatically appearing
 });
 
-router.post("/submit", async (req, res) => {
+router.post("/", async (req, res) => {
   //Transfer user habit input data to MySQL database------------------
   //Defining userId
   //Used to define users on platform and filling user_id foreign key.
@@ -58,7 +58,6 @@ router.post("/submit", async (req, res) => {
     part_time_job,
     extracurricular_participation,
   } = req.body;
-
   try {
     //Log the data transfer
     console.log("User habit data attempting transfer to database.");
@@ -106,7 +105,15 @@ router.post("/submit", async (req, res) => {
     //Values model viewed
     console.log("The model saw this:", response.users_data);
 
-    //Render the home page with the rating in.
+    //Send the mental health data to the MySQL Database
+    //mental_health_scores table database querying
+    const scoreTableSQL = `INSERT INTO mental_health_scores (app_user_id, mental_health_rating) VALUES (?, ?)`;
+    console.log(modelRating)
+    //Send that data!
+    await health_db.execute(scoreTableSQL, [userId, modelRating]);
+
+    //Render the home page with the rating included.
+    //This allows for the user to see their rating in the home page
     res.render("home", { rating: modelRating });
   } catch (ml_err) {
     //Error message for rating
