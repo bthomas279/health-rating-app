@@ -17,20 +17,23 @@ public/
 └──style.css               # Contains styling for login and signup page 
 
 routes/
-├──home.js                 # Contains styling for login and signup page 
+├──home.js                 # Contains REST APIs to run form submission, database querying, and requests and recieves data from ml model
 ├──login.js                # Contains REST APIs to run login action, creates a session for the user
 ├──logout.js               # Contains REST APIs to run logout action and can destroy the session
 ├──signup.js               # Puts the user into the system (SQL query and REST), enabling ability to login 
-└──universal.js            # Global rerouting in case user location is "/"
+├──universal.js            # Global rerouting in case user location is "/"
+└──visuals.js              # Graphs user's ratings (database query and REST)
 
 src/
 ├──database.js             # Calls database and establishes requests to or from it
-└──index.js                # Main hub to activate the routes, sever and app
+├──index.js                # Main hub to activate the routes, sever and app
+└──model_call.js           # Transforms user inputs to be read by the ml model, and calls it via fetch
 
 views/
 ├──home.ejs                 # Serves as the front end for the home page
 ├──login.ejs                # Serves as the front end for the login page
-└──signup.js                # Serves as the front end for the signup page
+├──signup.ejs               # Serves as the front end for the signup page
+└──visuals.ejs              # Serves as the front end for the visuals page                          
 
 ```
 

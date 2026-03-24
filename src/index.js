@@ -9,11 +9,13 @@ import cors from "cors";
 import session from "express-session";
 
 //Importing routes
-import signupRoute from "../routes/signup.js";
-import loginRoute from "../routes/login.js";
-import homeRoute from "../routes/home.js";
-import logoutRoute from "../routes/logout.js";
-import uniDirectRoute from "../routes/logout.js";
+//Allows pages to be used by server
+import signupRoute from "../routes/signup.js"; //For signup
+import loginRoute from "../routes/login.js"; //For login
+import homeRoute from "../routes/home.js"; //For home
+import logoutRoute from "../routes/logout.js"; //For logout
+import uniDirectRoute from "../routes/logout.js"; //For base url "/"
+import visualRoute from "../routes/visuals.js"; //For visuals page
 
 //Dotenv configuration
 dotenv.config();
@@ -55,7 +57,9 @@ app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
 app.use("/home", homeRoute);
 app.use("/logout", logoutRoute);
-app.use("/", uniDirectRoute)
+app.use("/visuals", visualRoute);
+app.use("/", uniDirectRoute);
+
 
 //Opens and runs the server to allow incoming requests
 app.listen(port, () => {
