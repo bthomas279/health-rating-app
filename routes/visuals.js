@@ -23,11 +23,20 @@ router.post("/", async (req, res) => {
   }
 
   //Database querying
-  const sqlGrab = `SELECT app_user_id, mental_health_ratings FROM mental_health_scores 
+  const sql = `SELECT app_user_id, mental_health_ratings FROM mental_health_scores 
   WHERE app_user_id = ?`;
 
-  const ratingGrab = await 
+  //Variable to grab all mental health rating
+  const ratingGrab = await health_db.execute(sql, [userId])
+
+  //Test the grab
+  console.log(ratingGrab[0].mental_health_ratings)
+
+
+
   //Grab all the rating data and dates from the user in the session
+
+
 });
 
 //Export Router
