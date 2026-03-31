@@ -36,7 +36,7 @@ app.use(express.json());
 //Parse Incoming Requests sent by HTML forms
 app.use(express.urlencoded({ extended: true }));
 
-//Connect style.css to views
+//Connect css files to views
 app.use(express.static("public"));
 
 //Express-session configuration.
