@@ -64,7 +64,7 @@ router.post("/", async (req, res) => {
       req.session.save((err) => {
         if (err) {
           console.error(err);
-          return res.redirect("login");
+          return res.redirect("/login");
         }
       });
 
