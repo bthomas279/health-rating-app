@@ -9,6 +9,7 @@ const router = express.Router();
 //Render Signup Page Route
 router.get("/", (req, res) => {
   res.render("signup", {
+    //Sends reason for error
     reason: req.query.reason
   });
 });

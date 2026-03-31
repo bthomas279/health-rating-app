@@ -10,7 +10,7 @@ const router = express.Router();
 //Middleware-------------------
 //Meant to cut user out of home page if they logout/don't have a session
 function userAuth(req, res, next) {
-  //Returns user to login if they attempt to access the home page without a session
+  //Returns user to login if the attempt to access the home page without a session
   if (!req.session.users) {
     //Displays a message if user attempted to submit habit data in destroyed session
     //Responds only when using router.post
@@ -108,7 +108,7 @@ router.post("/", async (req, res) => {
     //Send the mental health data to the MySQL Database
     //mental_health_scores table database querying
     const scoreTableSQL = `INSERT INTO mental_health_scores (app_user_id, mental_health_rating) VALUES (?, ?)`;
-    console.log(modelRating)
+    console.log(modelRating);
     //Send that data!
     await health_db.execute(scoreTableSQL, [userId, modelRating]);
 
