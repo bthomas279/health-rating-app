@@ -4,6 +4,27 @@ import health_db from "../src/database.js";
 
 const router = express.Router();
 
+//Middleware-------------------
+//Meant to cut user out of visuals page if they logout/don't have a session
+function userAuth(req, res, next) {
+  //Returns user to login if the attempt to access the home page without a session
+  if (!req.session.users) {
+    //Displays a message if user attempted to submit habit data in destroyed session
+    //Responds only when using router.post
+    if (req.method === "POST") {
+      return res.redirect("/login?reason=sessionDNE"); //"Route,Query,parameter name=parameter value"
+    }
+    return res.redirect("/login");
+  }
+
+  //Continue if session exists
+  next();
+}
+
+//Activate function specifically in visuals router
+router.use(userAuth);
+
+
 //REST APIs (GET, POST)
 //Render Visual Page Route
 router.get("/", (req, res) => {

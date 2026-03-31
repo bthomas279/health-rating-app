@@ -16,8 +16,6 @@ async function modelCall(user) {
     diet_int = 0;
   } else if (user.diet_quality == "Good") {
     diet_int = 1;
-  } else if (user.diet_quality == "Other") {
-    diet_int = 3;
   }
 
   //For part-time job
