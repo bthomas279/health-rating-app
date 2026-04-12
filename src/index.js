@@ -52,6 +52,7 @@ app.use(
   }),
 );
 
+
 //Access all routes from the routes folder
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
