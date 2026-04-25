@@ -1,6 +1,8 @@
 import express from "express";
 //Importing database
 import health_db from "../src/database.js";
+//Import chart
+import Chart from 'chart.js/auto';
 
 const router = express.Router();
 
@@ -36,6 +38,9 @@ router.post("/", async (req, res) => {
   //Define the userId from the login page
   const userId = req.session.users.user_id;
 
+  //Grab user request
+  const {visual} = req.body
+
   //Check if the userId exists, if not, show a error
   if (!userId) {
     return res.status(500).send("User session/id not found");
@@ -44,18 +49,23 @@ router.post("/", async (req, res) => {
   }
 
   //Database querying
-  const sql = `SELECT app_user_id, mental_health_ratings FROM mental_health_scores 
+  const sql = `SELECT app_user_id, mental_health_rating, created_at FROM mental_health_scores 
   WHERE app_user_id = ?`;
 
-  //Variable to grab all mental health rating
+  //Variable to grab all mental health ratings under userId
   const ratingGrab = await health_db.execute(sql, [userId])
 
   //Test the grab
-  console.log(ratingGrab[0].mental_health_ratings)
+  console.log(ratingGrab.app_user_id)
+
+  //Create the canvas
+  console.log(visual)
+  const canvas = document.createElement('canvas');
+  canvas.id = 'ratingChart'
+
+  const ratingChart = new Chart(ratingGrab)
 
 
-
-  //Grab all the rating data and dates from the user in the session
 
 
 });
