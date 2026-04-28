@@ -11,11 +11,11 @@ async function modelCall(user) {
 
   let diet_int;
   if (user.diet_quality == "Poor") {
-    diet_int = 2;
-  } else if (user.diet_quality == "Fair") {
     diet_int = 0;
-  } else if (user.diet_quality == "Good") {
+  } else if (user.diet_quality == "Fair") {
     diet_int = 1;
+  } else if (user.diet_quality == "Good") {
+    diet_int = 2;
   }
 
   //For part-time job
