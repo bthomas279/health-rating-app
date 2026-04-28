@@ -1,8 +1,6 @@
 import express from "express";
 //Importing database
 import health_db from "../src/database.js";
-//Import chart
-import Chart from 'chart.js/auto';
 
 const router = express.Router();
 
@@ -60,13 +58,6 @@ router.post("/", async (req, res) => {
 
   //Create the canvas
   console.log(visual)
-  const canvas = document.createElement('canvas');
-  canvas.id = 'ratingChart'
-
-  const ratingChart = new Chart(ratingGrab)
-
-
-
 
 });
 
