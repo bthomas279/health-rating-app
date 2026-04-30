@@ -5,7 +5,7 @@ async function modelCall(user) {
 
   //Check what's inside of user
   //console.log("In Model Call, the User contains:", user);
-  
+
   //Some of the data are words. Code to change them into str numbers
   //For diet quality
 
@@ -53,23 +53,21 @@ async function modelCall(user) {
     part_time_job: job_int,
     extracurricular_participation: ep_int,
   };
-  //console.log("This is userInt:", userInt);
+  console.log(user.rating_type);
 
-  //In order for the user to choose the reg model, class model, or both, I need to define the choice
-  if (user.rating_type == "Reg") {
-    //Call model
-    const model_response = await fetch("http://127.0.0.1:8000/grab/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userInt),
-    });
-    //Model response as Json file
-    return model_response.json();
+  //In order for the user to choose the reg model, class model, or both, I need to define the choice in FastAPI
+  //Call model
+  const model_response = await fetch("http://127.0.0.1:8000/predict/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model_type: user.rating_type,
+      data: userInt,
+    }),
+  });
+  //Model response as Json file
+  return model_response.json();
 }
-
-  }
-
-  
 
 //Export function to be used elsewhere
 export default modelCall;

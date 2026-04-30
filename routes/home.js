@@ -30,7 +30,7 @@ router.use(userAuth);
 //REST APIs (GET, POST)
 //Render Home Page Route
 router.get("/", (req, res) => {
-  res.render("home", { rating: null }); //Prevents a blank rating from automatically appearing
+  res.render("home", { regRating: null, classRating: null }); //Prevents a blank rating from automatically appearing
 });
 
 router.post("/", async (req, res) => {
@@ -98,30 +98,35 @@ router.post("/", async (req, res) => {
     const response = await modelCall(req.body);
 
     //Define rating value
-    const modelRating = response.rating;
+    const regModelRating = response.reg_rating;
+    const classModelRating = response.class_rating;
 
     //View connection output
     //Rating
-    console.log("The model's rating:", modelRating);
+    console.log("The model's Regression rating:", regModelRating);
+    console.log("The model's Classification rating:", classModelRating);
     //Values model viewed
     console.log("The model saw this:", response.users_data);
 
     //Send the mental health data to the MySQL Database
     //mental_health_scores table database querying
-    const scoreTableSQL = `INSERT INTO mental_health_scores (app_user_id, reg_mental_health_rating) VALUES (?, ?)`;
-    console.log(modelRating);
+    const scoreTableSQL = `INSERT INTO mental_health_scores (app_user_id, reg_mental_health_rating, class_mental_health_rating) VALUES (?, ?, ?)`;
+
     //Send that data!
-    await health_db.execute(scoreTableSQL, [userId, modelRating]);
+    await health_db.execute(scoreTableSQL, [userId, regModelRating, classModelRating]);
 
     //Render the home page with the rating included.
     //This allows for the user to see their rating in the home page
-    res.render("home", { rating: modelRating });
+    res.render("home", {
+      regRating: regModelRating,
+      classRating: classModelRating,
+    });
   } catch (ml_err) {
     //Error message for rating
     console.error("Model error:", ml_err);
     return res
       .status(500)
-      .send("Model Server Error inside home (FastAPI server may be off)");
+      .send("FastAPI Server Error inside home (FastAPI server may be off)");
   }
 });
 

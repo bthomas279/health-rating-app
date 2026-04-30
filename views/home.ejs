@@ -25,20 +25,22 @@
         <!-- Main User Input Area -->
         <div class = "main_content">
             <!--Shows the rating predicted by the model if it exists-->
-            <% if (rating) { %>
-                <p>Mental Health Rating: <%= rating  %></p>
+            <% if (regRating) { %>
+                <p>Mental Health Rating (Regression): <%= regRating  %></p>
             <% } %>
-
+            <% if (classRating) { %>
+                <p>Mental Health Rating (Classification): <%= classRating  %></p>
+            <% } %>
 
             <!-- Habat data form -->
             <section>
                 <form action = "/home" id = "health_input_form" method = "post">
                     <h3>Rating Type</h3>
-                    <label for = "userRate">Please select the type of rating you would like to view:</label>
+                    <label for = "userRate">Please select the type of rating you would like to calculate:</label>
                         <select id = "userType" name = "rating_type" required>
                             <option value = "Both">Categorical & Numerical</option>
-                            <option value = "Class">Categorical</option>
-                            <option value = "Reg">Numerical</option>
+                            <option value = "Classification">Categorical</option>
+                            <option value = "Regression">Numerical</option>
                         </select>
 
                     <h2>Sleep Hours Input</h2>
