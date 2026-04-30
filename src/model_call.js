@@ -55,15 +55,21 @@ async function modelCall(user) {
   };
   //console.log("This is userInt:", userInt);
 
-  //Call model
-  const model_response = await fetch("http://127.0.0.1:8000/grab/", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userInt),
-  });
-  //Model response as Json file
-  return model_response.json();
+  //In order for the user to choose the reg model, class model, or both, I need to define the choice
+  if (user.rating_type == "Reg") {
+    //Call model
+    const model_response = await fetch("http://127.0.0.1:8000/grab/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userInt),
+    });
+    //Model response as Json file
+    return model_response.json();
 }
+
+  }
+
+  
 
 //Export function to be used elsewhere
 export default modelCall;

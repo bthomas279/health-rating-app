@@ -49,6 +49,7 @@ router.post("/", async (req, res) => {
 
   //Grab user input values
   const {
+    rating_type,
     sleep_hours,
     tv_hours,
     diet_quality,
@@ -107,7 +108,7 @@ router.post("/", async (req, res) => {
 
     //Send the mental health data to the MySQL Database
     //mental_health_scores table database querying
-    const scoreTableSQL = `INSERT INTO mental_health_scores (app_user_id, mental_health_rating) VALUES (?, ?)`;
+    const scoreTableSQL = `INSERT INTO mental_health_scores (app_user_id, reg_mental_health_rating) VALUES (?, ?)`;
     console.log(modelRating);
     //Send that data!
     await health_db.execute(scoreTableSQL, [userId, modelRating]);
@@ -120,7 +121,7 @@ router.post("/", async (req, res) => {
     console.error("Model error:", ml_err);
     return res
       .status(500)
-      .send("Model Server Error inside home (Model server may be off)");
+      .send("Model Server Error inside home (FastAPI server may be off)");
   }
 });
 

@@ -33,6 +33,14 @@
             <!-- Habat data form -->
             <section>
                 <form action = "/home" id = "health_input_form" method = "post">
+                    <h3>Rating Type</h3>
+                    <label for = "userRate">Please select the type of rating you would like to view:</label>
+                        <select id = "userType" name = "rating_type" required>
+                            <option value = "Both">Categorical & Numerical</option>
+                            <option value = "Class">Categorical</option>
+                            <option value = "Reg">Numerical</option>
+                        </select>
+
                     <h2>Sleep Hours Input</h2>
                     <p>On average, how many hours of sleep do you get per day? (Round to one decimal place).</p>
                     <input type = "text" id = "userSleep" name = "sleep_hours" required>
