@@ -26,10 +26,10 @@
         <div class = "main_content">
             <!--Shows the rating predicted by the model if it exists-->
             <% if (regRating) { %>
-                <p>Mental Health Rating (Regression): <%= regRating  %></p>
+                <p>Numerical Mental Health Rating: <%= regRating  %></p>
             <% } %>
             <% if (classRating) { %>
-                <p>Mental Health Rating (Classification): <%= classRating  %></p>
+                <p>Categorical Mental Health Rating: <%= classRating  %></p>
             <% } %>
 
             <!-- Habat data form -->

@@ -34,7 +34,7 @@ routes/
 src/
 ├──database.js             # Calls database and establishes requests to or from it
 ├──index.js                # Main hub to activate the routes, sever and app
-├──model_call.js           # Transforms user inputs to be read by the ml model, and calls it via fetch
+├──model_call.js           # Transforms user inputs to be read by the ml models, and calls it via fetch
 └──plot_call.js            # Transforms user imputs for graph details to be sent to FastAPI.
 
 views/
