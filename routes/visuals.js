@@ -24,7 +24,6 @@ function userAuth(req, res, next) {
 //Activate function specifically in visuals router
 router.use(userAuth);
 
-
 //REST APIs (GET, POST)
 //Render Visual Page Route
 router.get("/", (req, res) => {
@@ -35,9 +34,11 @@ router.get("/", (req, res) => {
 router.post("/", async (req, res) => {
   //Define the userId from the login page
   const userId = req.session.users.user_id;
+  //Test if user_id is present
+  console.log(userId);
 
   //Grab user request
-  const {visual} = req.body
+  const { visual, userId } = req.body;
 
   //Check if the userId exists, if not, show a error
   if (!userId) {
@@ -46,19 +47,24 @@ router.post("/", async (req, res) => {
     console.log("Session found. User Id:", userId); //Remove later
   }
 
-  //Database querying
-  const sql = `SELECT app_user_id, mental_health_rating, created_at FROM mental_health_scores 
-  WHERE app_user_id = ?`;
+  try {
+    const sql = `SELECT app_user_id, reg_mental_health_rating, class_mental_health_rating created_at FROM mental_health_scores 
+    WHERE app_user_id = ?`;
 
-  //Variable to grab all mental health ratings under userId
-  const ratingGrab = await health_db.execute(sql, [userId])
+    //Grab info from database
+    await health_db.execute(sql, [userId]);
 
-  //Test the grab
-  console.log(ratingGrab.app_user_id)
-
-  //Create the canvas
-  console.log(visual)
-
+    //Test grab
+    console.log(userId);
+  } catch (plot_err) {
+    //Error message for graph
+    console.error("Plot error:", plot_err);
+    return res
+      .status(500)
+      .send(
+        "FastAPI Server Error inside home (FastAPI server may be off) | Location: Plot",
+      );
+  }
 });
 
 //Export Router
