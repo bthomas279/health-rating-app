@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
   } else {
     console.log("Session found. User Id:", userId); //Remove later
   }
-
+  //Will remove code below later
   try {
     const sql = `SELECT app_user_id, reg_mental_health_rating, class_mental_health_rating created_at FROM mental_health_scores 
     WHERE app_user_id = ?`;
