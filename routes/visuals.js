@@ -34,8 +34,6 @@ router.get("/", (req, res) => {
 router.post("/", async (req, res) => {
   //Define the userId from the login page
   const userId = req.session.users.user_id;
-  //Test if user_id is present
-  console.log(userId);
 
   //Grab user request
   const { visual } = req.body;
@@ -46,27 +44,39 @@ router.post("/", async (req, res) => {
   } else {
     console.log("Session found. User Id:", userId); //Remove later
   }
- 
 
+  //Queries to grab the needed MySQL data based on the request
   try {
-    const sql = `SELECT app_user_id, reg_mental_health_rating, class_mental_health_rating, created_at FROM mental_health_scores 
-    WHERE app_user_id = ?`;
 
-    //Grab info from database
-    const data = await health_db.execute(sql, [userId]);
+    if (visual == "regRate" | "classRate") {
+      const sql = `SELECT * FROM mental_health_scores WHERE app_user_id = ?`;
+      //Grab rating info
+      const [rating_data] = await health_db.execute(sql_rating, [userId]);
 
-    //Test grab
-    console.log(data)
+      //Test grab (REMOVE LATER)
+      console.log(rating_data);
+    }
+   
+    if (visual == "study_hours" | "sleep_hours") {
+      //Code to grab needed habit info
+      const sql = `SELECT user_id, sleep_hours, daily_study_hours, created_at FROM user_habits WHERE user_id = ?`;
+      const [habit_data] = await health_db.execute(sql_habit, [userId]);
 
+      //Test grab (REMOVE LATER)
+      console.log(habit_data);
+    }
+    
+    //Error catching
   } catch (plot_err) {
     //Error message for graph
     console.error("Plot error:", plot_err);
     return res
       .status(500)
       .send(
-        "FastAPI Server Error inside home (FastAPI server may be off) | Location: Plot",
+        "Database Server Error inside visuals",
       );
   }
+
 });
 
 //Export Router

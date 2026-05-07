@@ -65,7 +65,7 @@ async function modelCall(user) {
       data: userInt,
     }),
   });
-  //Model response as Json file
+  //Model response as Json format
   return model_response.json();
 }
 

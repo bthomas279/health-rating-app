@@ -125,7 +125,7 @@ router.post("/", async (req, res) => {
     console.error("Model error:", ml_err);
     return res
       .status(500)
-      .send("FastAPI Server Error inside home (FastAPI server may be off) | Location: Model");
+      .send("Node.js Server Error inside home (FastAPI server may be off) | Location: Model");
   }
 });
 

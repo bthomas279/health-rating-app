@@ -34,7 +34,9 @@ router.post("/", async (req, res) => {
 
     //If the user (username) is not found, sends error.
     if (data_pull.length === 0) {
-      return res.status(401).send("Username is missing from database or does not exist.");
+      return res
+        .status(401)
+        .send("Username is missing from database or does not exist.");
     }
 
     //Protecting user passwords through hash
@@ -48,9 +50,8 @@ router.post("/", async (req, res) => {
 
     //If passwords do not match, sends error in login page.
     if (!match) {
-      console.log("Information sent did not match.")
+      console.log("Information sent did not match.");
       return res.status(400).redirect("/login?reason=badAccountData");
-      
     }
     //If passwords match...
     if (match) {
