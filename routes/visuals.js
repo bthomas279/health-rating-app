@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
   console.log(userId);
 
   //Grab user request
-  const { visual, userId } = req.body;
+  const { visual } = req.body;
 
   //Check if the userId exists, if not, show a error
   if (!userId) {
@@ -46,16 +46,18 @@ router.post("/", async (req, res) => {
   } else {
     console.log("Session found. User Id:", userId); //Remove later
   }
-  //Will remove code below later
+ 
+
   try {
-    const sql = `SELECT app_user_id, reg_mental_health_rating, class_mental_health_rating created_at FROM mental_health_scores 
+    const sql = `SELECT app_user_id, reg_mental_health_rating, class_mental_health_rating, created_at FROM mental_health_scores 
     WHERE app_user_id = ?`;
 
     //Grab info from database
-    await health_db.execute(sql, [userId]);
+    const data = await health_db.execute(sql, [userId]);
 
     //Test grab
-    console.log(userId);
+    console.log(data)
+
   } catch (plot_err) {
     //Error message for graph
     console.error("Plot error:", plot_err);
