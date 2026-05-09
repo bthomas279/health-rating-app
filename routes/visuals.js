@@ -1,6 +1,7 @@
 import express from "express";
 //Importing database
 import health_db from "../src/database.js";
+import plotCall from "../src/plot_call.js";
 
 const router = express.Router();
 
@@ -47,36 +48,62 @@ router.post("/", async (req, res) => {
 
   //Queries to grab the needed MySQL data based on the request
   try {
-
-    if (visual == "regRate" | "classRate") {
+    if (visual == "regRate" || "classRate") {
       const sql = `SELECT * FROM mental_health_scores WHERE app_user_id = ?`;
       //Grab rating info
-      const [rating_data] = await health_db.execute(sql_rating, [userId]);
+      const [data_call] = await health_db.execute(sql, [userId]);
 
-      //Test grab (REMOVE LATER)
-      console.log(rating_data);
+      //Organize needed data
+      let userData = data_call.map((row) => ({
+        regression_ratings: row.reg_mental_health_rating,
+        classification_ratings: row.class_mental_health_rating,
+        time: row.created_at,
+      }));
+      //test
+      console.log(userData)
+
+      //Code to call fast api to return plot based off of request given
+      const plot_response = await fetch("http://127.0.0.1:8000/plot/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_request: visual,
+          data: userData,
+        }),
+      });
     }
-   
-    if (visual == "study_hours" | "sleep_hours") {
+
+    if (visual == "study" || "sleep") {
       //Code to grab needed habit info
       const sql = `SELECT user_id, sleep_hours, daily_study_hours, created_at FROM user_habits WHERE user_id = ?`;
-      const [habit_data] = await health_db.execute(sql_habit, [userId]);
+      const [data_call] = await health_db.execute(sql, [userId]);
 
-      //Test grab (REMOVE LATER)
-      console.log(habit_data);
+      //Organize needed data
+      let userData = data_call.map((row) => ({
+        study_hours: row.daily_study_hours,
+        sleep_hours: row.sleep_hours,
+        time: row.created_at,
+      }));
+
+      //Code to call fast api to return plot based off of request given
+      const plot_response = await fetch("http://127.0.0.1:8000/plot/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_request: visual,
+          data: userData,
+        }),
+      });
     }
-    
+
     //Error catching
   } catch (plot_err) {
     //Error message for graph
     console.error("Plot error:", plot_err);
     return res
       .status(500)
-      .send(
-        "Database Server Error inside visuals",
-      );
+      .send("Database or FastAPI Server Error inside visuals");
   }
-
 });
 
 //Export Router
