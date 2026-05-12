@@ -38,17 +38,18 @@ router.post("/", async (req, res) => {
 
   //Grab user request
   const { visual } = req.body;
+  console.log(visual);
 
   //Check if the userId exists, if not, show a error
   if (!userId) {
     return res.status(500).send("User session/id not found");
   } else {
-    console.log("Session found. User Id:", userId); //Remove later
+    console.log("Session found.");
   }
 
   //Queries to grab the needed MySQL data based on the request
   try {
-    if (visual == "regRate" || "classRate") {
+    if (visual == "regRate" || visual == "classRate") {
       const sql = `SELECT * FROM mental_health_scores WHERE app_user_id = ?`;
       //Grab rating info
       const [data_call] = await health_db.execute(sql, [userId]);
@@ -60,7 +61,7 @@ router.post("/", async (req, res) => {
         time: row.created_at,
       }));
       //test
-      console.log(userData)
+      console.log(visual, userData);
 
       //Code to call fast api to return plot based off of request given
       const plot_response = await fetch("http://127.0.0.1:8000/plot/", {
@@ -73,7 +74,8 @@ router.post("/", async (req, res) => {
       });
     }
 
-    if (visual == "study" || "sleep") {
+    //For study/sleep requests
+    if (visual == "study" || visual == "sleep") {
       //Code to grab needed habit info
       const sql = `SELECT user_id, sleep_hours, daily_study_hours, created_at FROM user_habits WHERE user_id = ?`;
       const [data_call] = await health_db.execute(sql, [userId]);
@@ -84,7 +86,7 @@ router.post("/", async (req, res) => {
         sleep_hours: row.sleep_hours,
         time: row.created_at,
       }));
-
+      console.log(visual, userData);
       //Code to call fast api to return plot based off of request given
       const plot_response = await fetch("http://127.0.0.1:8000/plot/", {
         method: "POST",
