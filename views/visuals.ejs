@@ -26,7 +26,7 @@
             <form action = "/visuals" id = "health_visuals_form" method = "post"> 
                 <label for = "allVisuals">Select what data you would like to view:</label>
                     <select id = "visualChoice" name = "visual" required>
-                        <option></option>
+                        <option></option>j
                         <option value = "regRate">Numerical Ratings</option>
                         <option value = "classRate">Categorical Ratings</option>
                         <option value = "sleep">Sleep Hours</option>
@@ -35,8 +35,11 @@
                 <br><br>
                 <button>Check out my previous stats!</button>
             </form>
-
         </div>
+        <% if (image) { %>
+             <img src="data:image/png;base64,<%= image %>" alt="Your chart" />
+        <% } %>
+       
 
     </body>
 </html>

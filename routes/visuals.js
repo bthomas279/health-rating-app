@@ -28,7 +28,7 @@ router.use(userAuth);
 //REST APIs (GET, POST)
 //Render Visual Page Route
 router.get("/", (req, res) => {
-  res.render("visuals");
+  res.render("visuals", { image: null });
 });
 
 //POST Router (grab data first)
@@ -72,6 +72,13 @@ router.post("/", async (req, res) => {
           data: userData,
         }),
       });
+      //Define generated image
+      const { image } = await plot_response.json();
+      console.log(image)
+      //Render visuals page
+      res.render("visuals", {
+        image: image,
+      });
     }
 
     //For study/sleep requests
@@ -95,6 +102,14 @@ router.post("/", async (req, res) => {
           user_request: visual,
           data: userData,
         }),
+      });
+
+      //Define generated image
+      const { image } = await plot_response.json();
+      console.log(image)
+      //Render visuals page
+      res.render("visuals", {
+        image: image,
       });
     }
 
