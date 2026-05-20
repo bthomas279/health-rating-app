@@ -1,9 +1,6 @@
 # health-rating-app
 **IMPORTANT NOTICE: This project is still under development.**
 
-Planned development:
-1. Mental Health Data visualization talored for each user.
-
 ## About
 This project is a full-stack student mental health rating system that uses Node.js, EJS, and Javascript to generate mental health ratings based on stored habit data, and provide user-tailored visualizations.
 When I first started development, I had the goal to learn how to develop a full-stack system to connect machine learning models outside of the code editor. 
