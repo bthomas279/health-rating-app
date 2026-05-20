@@ -102,10 +102,10 @@ router.post("/", async (req, res) => {
 
     //View connection output
     //Rating
-    console.log("The model's Regression rating:", regModelRating);
-    console.log("The model's Classification rating:", classModelRating);
+    //console.log("The model's Regression rating:", regModelRating);
+    //console.log("The model's Classification rating:", classModelRating);
     //Values model viewed
-    console.log("The model saw this:", response.users_data);
+    //console.log("The model saw this:", response.users_data);
 
     //Send the mental health data to the MySQL Database
     //mental_health_scores table database querying
@@ -125,7 +125,7 @@ router.post("/", async (req, res) => {
     console.error("Model error:", ml_err);
     return res
       .status(500)
-      .send("Node.js Server Error inside home (FastAPI server may be off) | Location: Model");
+      .send("Node.js Server Error inside home (FastAPI server may be off) | Location: home.js");
   }
 });
 

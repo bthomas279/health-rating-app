@@ -2,17 +2,14 @@
 **IMPORTANT NOTICE: This project is still under development.**
 
 ## About
-This project is a full-stack student mental health rating system that uses Node.js, EJS, and Javascript to generate mental health ratings based on stored habit data, and provide user-tailored visualizations.
-When I first started development, I had the goal to learn how to develop a full-stack system to connect machine learning models outside of the code editor. 
+This project is a full-stack student mental health rating system that uses Node.js, EJS, and Javascript to generate mental health ratings based on stored habit data, and provide user-tailored visualizations of specific data.
 
 ## Features
-- User Accounts (Signup, Login, Logout, Password Encryption)
-- Databe Querying (Saved user data)
-- Machine Learning Model Responses
-- Dynamic System Routing
-
-Currently in development:
-- User-tailored visualizations via Seaborn called through FastAPI
+- User Accounts (Signup, Login, Logout, Password Encryption, Sessions)
+- MySQL Database Querying (Saved user data)
+- Machine Learning Model Responses called through FastAPI (Both categrical and numerical )
+- Dynamic System Routing via Node.js routes
+- User-tailored visualizations called through FastAPI
 
 ## Project Structure
 ```
@@ -31,8 +28,7 @@ routes/
 src/
 ├──database.js             # Calls database and establishes requests to or from it
 ├──index.js                # Main hub to activate the routes, sever and app
-├──model_call.js           # Transforms user inputs to be read by the ml models, and calls it via fetch
-└──plot_call.js            # Transforms user imputs for graph details to be sent to FastAPI.
+└──model_call.js           # Transforms user inputs to be read by the ml models, and calls it via fetch
 
 views/
 ├──home.ejs                 # Serves as the front end for the home page
@@ -40,12 +36,12 @@ views/
 ├──signup.ejs               # Serves as the front end for the signup page
 └──visuals.ejs              # Serves as the front end for the visuals page                          
 
+├──package.json             # Project dependencies
+└──vercel.json              # Source for vercel deployment
+
 ```
-
-## File Uses
-
-
-
 
 ## Programmer
 This project is being developed by Benjamin Thomas as a personal project.
+
+When I first started development, I had the goal to learn how to develop a full-stack system to connect machine learning models outside of the code editor. Through this project, I've learned about many technical resources and skills that apply to a wide range of fields.
