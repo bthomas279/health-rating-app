@@ -52,7 +52,6 @@ app.use(
   }),
 );
 
-
 //Access all routes from the routes folder
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
@@ -66,6 +65,4 @@ app.use("/", uniDirectRoute);
 app.listen(port, () => {
   console.log("Server running on http://localhost:",port);
 });
-//Access Using http://localhost:3000
-//I ran into problems with VSCode's terminal with a redraw bug. I will
-//now run this program inside of windows terminal instead
+

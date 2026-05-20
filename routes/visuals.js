@@ -1,7 +1,6 @@
 import express from "express";
 //Importing database
 import health_db from "../src/database.js";
-import plotCall from "../src/plot_call.js";
 
 const router = express.Router();
 
@@ -106,7 +105,6 @@ router.post("/", async (req, res) => {
 
       //Define generated image
       const { image } = await plot_response.json();
-      console.log(image)
       //Render visuals page
       res.render("visuals", {
         image: image,
