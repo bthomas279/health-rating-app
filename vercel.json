@@ -3,7 +3,7 @@
   "builds": [
     {
       "src": "src/index.py",
-      "use": "@vercel/javascript"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
