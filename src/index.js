@@ -7,7 +7,7 @@ import cors from "cors";
 //Imports to help with deployment
 import { fileURLToPath } from 'url';
 import path from 'path';
-import MySQLStore from "express-mysql-session";
+import MySQLStoreFactory from "express-mysql-session";
 import health_db from "../src/database.js"
 
 //Session Middleware import
@@ -54,7 +54,14 @@ app.use(express.static("public"));
 
 //Express-session configuration.
 //Works by storing session ID in a cookie and session data on the server
-const sessionStore = new MySQLStore({}, health_db);
+const MySQLStore = MySQLStoreFactory(session);
+const sessionStore = new MySQLStore({
+  clearExpired: true,
+  checkExpirationInterval: 900000, //15 minutes
+  expiration: 86400000, //1 day
+  createDatabaseTable: true, //Auto create table if missing
+}, health_db);
+
 app.use(
   session({
     secret: process.env.SESSION_CODE, //Session password
