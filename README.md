@@ -40,7 +40,7 @@ views/
 └──vercel.json              # Source for vercel deployment
 
 ```
-
+ 
 ## Programmer
 This project is being developed by Benjamin Thomas as a personal project.
 
