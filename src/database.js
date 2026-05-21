@@ -19,14 +19,17 @@ const pool = mysql.createPool({
 });
 
 //Tests Node's connection to the Database in MySQL
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error("Connection Failed", err.message);
-  } else {
+async function testConnection() {
+  try {
+    const connection = await pool.getConnection();
     console.log("Database is Connected");
     connection.release();
+  } catch (err) {
+    console.error("Connection Failed:", err.message);
   }
-});
+}
+testConnection();
+
 export default pool;
 
 
