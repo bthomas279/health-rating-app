@@ -70,6 +70,8 @@ app.use(
     store: sessionStore,
     cookie: {
       secure: process.env.NODE_ENV,
+      sameSite: process.env.NODE_ENV ? "none" : "lax",
+      maxAge: 24 * 60 * 60 * 1000
     }
   }),
 );
