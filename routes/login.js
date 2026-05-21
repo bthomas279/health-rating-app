@@ -62,17 +62,17 @@ router.post("/", async (req, res) => {
         username: data_pull[0].username,
       };
 
-      //Saves session. Returns to login page if error occurs
+      //Saves session. Returns to login page if error occurs.
       req.session.save((err) => {
         if (err) {
           console.error(err);
           return res.redirect("/login");
         }
-      });
 
       //Successful connection. Send user to home_page.
       console.log("Login successful!");
       res.redirect("/home");
+      });
     }
 
     //Error catch
