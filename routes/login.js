@@ -16,6 +16,7 @@ router.get("/", (req, res) => {
   });
 });
 
+
 //Check if the username and password match ones in the MySQL database-------------
 //If so, logs user in and sends them to home.ejs.
 router.post("/", async (req, res) => {
