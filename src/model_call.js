@@ -57,7 +57,7 @@ async function modelCall(user) {
 
   //In order for the user to choose the reg model, class model, or both, I need to define the choice in FastAPI
   //Call model
-  const model_response = await fetch("http://127.0.0.1:8000/predict/", {
+  const model_response = await fetch("https://health-rating-app-mlmodel.vercel.app/predict/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
