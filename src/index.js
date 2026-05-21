@@ -4,6 +4,10 @@ import express from "express";
 import bcrypt from "bcrypt";
 import cors from "cors";
 
+//Imports to help with deployment
+import { fileURLToPath } from 'url';
+import path from 'path';
+
 //Session Middleware import
 //This is for the server to remember the user_id
 import session from "express-session";
@@ -24,8 +28,15 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
+//
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.set('views', path.join(__dirname, '../views'));
+
+
 //Tells app to use ejs. Use ejs as view engine.
 app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, '../public')));
 
 //Middleware----------------------------
 //Define usage and port
