@@ -7,6 +7,8 @@ import cors from "cors";
 //Imports to help with deployment
 import { fileURLToPath } from 'url';
 import path from 'path';
+import MySQLStore from "express-mysql-session";
+import health_db from "../src/database.js"
 
 //Session Middleware import
 //This is for the server to remember the user_id
@@ -18,7 +20,7 @@ import signupRoute from "../routes/signup.js"; //For signup
 import loginRoute from "../routes/login.js"; //For login
 import homeRoute from "../routes/home.js"; //For home
 import logoutRoute from "../routes/logout.js"; //For logout
-import uniDirectRoute from "../routes/logout.js"; //For base url "/"
+import uniDirectRoute from "../routes/universal.js"; //For base url "/"
 import visualRoute from "../routes/visuals.js"; //For visuals page
 
 //Dotenv configuration
@@ -52,13 +54,15 @@ app.use(express.static("public"));
 
 //Express-session configuration.
 //Works by storing session ID in a cookie and session data on the server
+const sessionStore = new MySQLStore({}, health);
 app.use(
   session({
     secret: process.env.SESSION_CODE, //Session password
     resave: true, //Controls if session is saved on every user habit data submission
     saveUninitialized: true, //Controls if empty sessions are saved
+    store: sessionStore,
     cookie: {
-      secure: false, //false due to use of http
+      secure: process.env.NODE_ENV,
     }
   }),
 );
@@ -73,7 +77,8 @@ app.use("/", uniDirectRoute);
 
 
 //Opens and runs the server to allow incoming requests
-app.listen(port, () => {
-  console.log("Server running on http://localhost:",port);
-});
+//app.listen(port, () => {
+//  console.log("Server running on http://localhost:",port);
+//});
 
+export default app
