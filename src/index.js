@@ -28,7 +28,7 @@ dotenv.config();
 
 //Creates express applications
 const app = express();
-const port = process.env.PORT;
+const port = process.env.DB_PORT;
 
 //
 const __filename = fileURLToPath(import.meta.url);
