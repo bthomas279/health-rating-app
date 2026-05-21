@@ -94,7 +94,7 @@ router.post("/", async (req, res) => {
       }));
       console.log(visual, userData);
       //Code to call fast api to return plot based off of request given
-      const plot_response = await fetch("http://127.0.0.1:8000/plot/", {
+      const plot_response = await fetch("https://health-rating-app-mlmodel.vercel.app/plot/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
