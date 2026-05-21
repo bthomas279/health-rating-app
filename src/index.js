@@ -10,6 +10,7 @@ import path from 'path';
 import MySQLStoreFactory from "express-mysql-session";
 import health_db from "../src/database.js"
 
+
 //Session Middleware import
 //This is for the server to remember the user_id
 import session from "express-session";
@@ -52,6 +53,8 @@ app.use(express.urlencoded({ extended: true }));
 //Connect css files to views
 app.use(express.static("public"));
 
+//
+
 //Express-session configuration.
 //Works by storing session ID in a cookie and session data on the server
 const MySQLStore = MySQLStoreFactory(session);
@@ -61,6 +64,9 @@ const sessionStore = new MySQLStore({
   expiration: 86400000, //1 day
   createDatabaseTable: true, //Auto create table if missing
 }, health_db);
+
+//Allows express to see the https connection (for sendin gsecure cookies)
+app.set('trust proxy', 1);
 
 app.use(
   session({
