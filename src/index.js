@@ -54,7 +54,7 @@ app.use(express.static("public"));
 
 //Express-session configuration.
 //Works by storing session ID in a cookie and session data on the server
-const sessionStore = new MySQLStore({}, health);
+const sessionStore = new MySQLStore({}, health_db);
 app.use(
   session({
     secret: process.env.SESSION_CODE, //Session password
