@@ -1,3 +1,6 @@
+body {
+    min-width: 400px;
+}
 #nav {
     background-color: rgb(80, 193, 210);
 }
@@ -25,8 +28,9 @@
     width: fit-content;
 }
 #welcome {
-    position: fixed;
+    position: sticky;
     top: 16px;
+    float: right;
     right: 16px;
 }
 #userStudy {
