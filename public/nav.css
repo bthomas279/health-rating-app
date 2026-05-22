@@ -20,4 +20,7 @@
 }
 #response {
     border: 2px solid rgb(40, 160, 240);
+    padding: 16px;
+    display: inline-block;
+    width: fit-content;
 }

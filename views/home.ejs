@@ -24,14 +24,17 @@
 
         <!-- Main User Input Area -->
         <div class = "main_content">
-            <!--Shows the rating predicted by the model if it exists-->
-            <% if (regRating) { %>
-                <p id = "response">Numerical Mental Health Rating: <%= regRating  %></p>
+            <% if (regRating || classRating) { %>
+                <div id = "response">
+                <!--Shows the rating predicted by the model if it exists-->
+                <% if (regRating) { %>
+                    <p>Numerical Mental Health Rating: <%= regRating  %></p>
+                <% } %>
+                <% if (classRating) { %>
+                    <p>Categorical Mental Health Rating: <%= classRating  %></p>
+                <% } %>
+                </div>
             <% } %>
-            <% if (classRating) { %>
-                <p id = "response">Categorical Mental Health Rating: <%= classRating  %></p>
-            <% } %>
-            
             <!-- Habat data form -->
             <section>
                 <form action = "/home" id = "health_input_form" method = "post">
