@@ -30,7 +30,11 @@ router.use(userAuth);
 //REST APIs (GET, POST)
 //Render Home Page Route
 router.get("/", (req, res) => {
-  res.render("home", { regRating: null, classRating: null }); //Prevents a blank rating from automatically appearing
+  res.render("home", {
+    regRating: null,
+    classRating: null,
+    username: req.session.users.username,
+  }); //Prevents a blank rating from automatically appearing
 });
 
 router.post("/", async (req, res) => {
@@ -112,7 +116,11 @@ router.post("/", async (req, res) => {
     const scoreTableSQL = `INSERT INTO mental_health_scores (app_user_id, reg_mental_health_rating, class_mental_health_rating) VALUES (?, ?, ?)`;
 
     //Send that data!
-    await health_db.execute(scoreTableSQL, [userId, regModelRating, classModelRating]);
+    await health_db.execute(scoreTableSQL, [
+      userId,
+      regModelRating,
+      classModelRating,
+    ]);
 
     //Render the home page with the rating included.
     //This allows for the user to see their rating in the home page
@@ -125,7 +133,9 @@ router.post("/", async (req, res) => {
     console.error("Model error:", ml_err);
     return res
       .status(500)
-      .send("Node.js Server Error inside home (FastAPI server may be off) | Location: home.js");
+      .send(
+        "Node.js Server Error inside home (FastAPI server may be off) | Location: home.js",
+      );
   }
 });
 
