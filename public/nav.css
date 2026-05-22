@@ -1,3 +1,6 @@
+body {
+    min-width: 500px;
+}
 #nav {
     background-color: rgb(80, 193, 210);
 }
@@ -26,7 +29,7 @@
 }
 #welcome {
     position: sticky;
-    top: 16px;
+    top: 30px;
     float: right;
     right: 16px;
 }
