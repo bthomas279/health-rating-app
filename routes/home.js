@@ -30,10 +30,11 @@ router.use(userAuth);
 //REST APIs (GET, POST)
 //Render Home Page Route
 router.get("/", (req, res) => {
+  const username = req.session.users.username;
   res.render("home", {
     regRating: null,
     classRating: null,
-    username: req.session.users.username,
+    username: username,
   }); //Prevents a blank rating from automatically appearing
 });
 
@@ -127,6 +128,7 @@ router.post("/", async (req, res) => {
     res.render("home", {
       regRating: regModelRating,
       classRating: classModelRating,
+      username: username,
     });
   } catch (ml_err) {
     //Error message for rating
