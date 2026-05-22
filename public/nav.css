@@ -25,9 +25,9 @@
     width: fit-content;
 }
 #welcome {
-    position: fixed;
-    top: 16px;
-    right: 16px;
+    float: right;
+    margin-right: 16px;
+    margin-top: -50px;
 }
 #userStudy {
     border: 2px solid rgb(0, 0, 0);
