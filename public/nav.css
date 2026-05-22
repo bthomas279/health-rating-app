@@ -13,14 +13,19 @@
     padding: 10px;
 }
 #nav a {
-  display: block;          
-  color: black;
-  text-decoration: none;
-  border-radius: 8px;
+    display: block;          
+    color: black;
+    text-decoration: none;
+    border-radius: 8px;
 }
 #response {
     border: 2px solid rgb(40, 160, 240);
     padding: 10px;
+    display: inline-block;
     width: fit-content;
-    float: right;
+}
+#welcome {
+    position: fixed;
+    top: 16px;
+    right: 16px;
 }
