@@ -1,12 +1,11 @@
 # health-rating-app
-**IMPORTANT NOTICE: This project is still under development.**
 
 ## About
 This project is a full-stack student mental health rating system that uses Node.js, EJS, and Javascript to generate mental health ratings based on stored habit data, and provide user-tailored visualizations of specific data.
 
 ## Features
 - User Accounts (Signup, Login, Logout, Password Encryption, Sessions)
-- MySQL Database Querying (Saved user data)
+- MySQL Database Querying (Saved user data) 
 - Machine Learning Model Responses called through FastAPI (Both categrical and numerical )
 - Dynamic System Routing via Node.js routes
 - User-tailored visualizations called through FastAPI
