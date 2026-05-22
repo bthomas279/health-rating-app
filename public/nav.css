@@ -18,3 +18,6 @@
   text-decoration: none;
   border-radius: 8px;
 }
+.response {
+    border: 2px solid rgb(242, 245, 247);
+}
