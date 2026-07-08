@@ -1,6 +1,7 @@
 # health-rating-app
 
-<img width="1918" height="1082" alt="Health app demo gif 2" src="https://github.com/user-attachments/assets/1ec513c0-e665-4354-bf3f-085846661177" />
+<img width="1918" height="1084" alt="health app demo 4 gif" src="https://github.com/user-attachments/assets/e96939df-e45e-4a7b-b3b1-7e580ac5cb46" />
+
 
 ## About
 This project is a full-stack student mental health rating system that uses Node.js, EJS, and Javascript to generate mental health ratings based on stored habit data, and provide user-tailored visualizations of specific data.
