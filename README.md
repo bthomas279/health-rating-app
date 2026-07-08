@@ -1,5 +1,7 @@
 # health-rating-app
 
+<img width="1918" height="1084" alt="Recording 2026-07-08 144405" src="https://github.com/user-attachments/assets/1d706c59-1676-466a-bf17-552fe74e4986" />
+
 
 
 ## About
