@@ -1,5 +1,7 @@
 # health-rating-app
 
+![alt text](docs/mental%20system%20home%20image.png)
+
 ## About
 This project is a full-stack student mental health rating system that uses Node.js, EJS, and Javascript to generate mental health ratings based on stored habit data, and provide user-tailored visualizations of specific data.
 
