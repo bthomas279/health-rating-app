@@ -1,6 +1,6 @@
 # health-rating-app
 
-<img width="1918" height="1084" alt="health app demo 4 gif" src="https://github.com/user-attachments/assets/e96939df-e45e-4a7b-b3b1-7e580ac5cb46" />
+<img width="1918" height="1084" alt="Recording 2026-07-08 144405" src="https://github.com/user-attachments/assets/1d706c59-1676-466a-bf17-552fe74e4986" />
 
 
 ## About
