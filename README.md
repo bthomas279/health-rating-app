@@ -3,6 +3,7 @@
 <img width="1918" height="1084" alt="Recording 2026-07-08 144405" src="https://github.com/user-attachments/assets/1d706c59-1676-466a-bf17-552fe74e4986" />
 
 
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
 
 ## About
 This project is a full-stack student mental health rating system that uses Node.js, EJS, and Javascript to generate mental health ratings based on stored habit data, and provide user-tailored visualizations of specific data.
